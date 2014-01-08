@@ -7,7 +7,7 @@ using Datetime, Series
 export op, hi, lo, cl, vm, aj,  
        opm, him, lom, clm, vmm, ajm,  
        firstday, secondday, tenthday, lastday, 
-       firstmonth, lastmonth, 
+       firstmonth, secondmonth, lastmonth, 
        SeriesPairDateFloat64, ArraySeriesPairDateFloat64
 
   # objects to test values
@@ -25,12 +25,13 @@ export op, hi, lo, cl, vm, aj,
   const ajm = readseries(Pkg.dir("MarketData/data/monthly_spx_from_1980_to_1989.csv"), value=7)
   
   # const to test dates
-  const firstday   = date(1980,1,3)
-  const secondday  = date(1980,1,4)
-  const tenthday   = date(1980,1,16)
-  const lastday    = date(1981,12,31)
-  const firstmonth = date(1980,1,3)
-  const lastmonth  = date(1989,12,1)
+  const firstday    = date(1980,1,3)
+  const secondday   = date(1980,1,4)
+  const tenthday    = date(1980,1,16)
+  const lastday     = date(1981,12,31)
+  const firstmonth  = date(1980,1,3)
+  const secondmonth = date(1980,2,1)
+  const lastmonth   = date(1989,12,1)
 
   # const to test structure
   const SeriesPairDateFloat64 = eval(:(SeriesPair{Date{ISOCalendar}, Float64}))
