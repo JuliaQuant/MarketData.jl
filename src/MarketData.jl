@@ -1,28 +1,34 @@
-using Datetime, Series
+using Datetime, TimeArrays
 
 module MarketData
 
-using Datetime, Series
+using Datetime, TimeArrays
 
 export op, hi, lo, cl, vm, aj,  
+       Op, Hi, Lo, Cl, Vm, Aj,  
        opm, him, lom, clm, vmm, ajm,  
        firstday, secondday, tenthday, lastday, 
-       firstmonth, secondmonth, lastmonth, 
-       SeriesPairDateFloat64, ArraySeriesPairDateFloat64
+       firstmonth, secondmonth, lastmonth
 
   # objects to test values
-  const op  = readseries(Pkg.dir("MarketData/data/daily_spx_from_1980_to_1981.csv"), value=2)
-  const hi  = readseries(Pkg.dir("MarketData/data/daily_spx_from_1980_to_1981.csv"), value=3)
-  const lo  = readseries(Pkg.dir("MarketData/data/daily_spx_from_1980_to_1981.csv"), value=4)
-  const cl  = readseries(Pkg.dir("MarketData/data/daily_spx_from_1980_to_1981.csv"), value=5)
-  const vm  = readseries(Pkg.dir("MarketData/data/daily_spx_from_1980_to_1981.csv"), value=6)
-  const aj  = readseries(Pkg.dir("MarketData/data/daily_spx_from_1980_to_1981.csv"), value=7)
-  const opm = readseries(Pkg.dir("MarketData/data/monthly_spx_from_1980_to_1989.csv"), value=2)
-  const him = readseries(Pkg.dir("MarketData/data/monthly_spx_from_1980_to_1989.csv"), value=3)
-  const lom = readseries(Pkg.dir("MarketData/data/monthly_spx_from_1980_to_1989.csv"), value=4)
-  const clm = readseries(Pkg.dir("MarketData/data/monthly_spx_from_1980_to_1989.csv"), value=5)
-  const vmm = readseries(Pkg.dir("MarketData/data/monthly_spx_from_1980_to_1989.csv"), value=6)
-  const ajm = readseries(Pkg.dir("MarketData/data/monthly_spx_from_1980_to_1989.csv"), value=7)
+  const op  = readtimearray(Pkg.dir("MarketData/data/daily_spx_from_1980_to_1981.csv"))
+  const hi  = readtimearray(Pkg.dir("MarketData/data/daily_spx_from_1980_to_1981.csv"))
+  const lo  = readtimearray(Pkg.dir("MarketData/data/daily_spx_from_1980_to_1981.csv"))
+  const cl  = readtimearray(Pkg.dir("MarketData/data/daily_spx_from_1980_to_1981.csv"))
+  const vm  = readtimearray(Pkg.dir("MarketData/data/daily_spx_from_1980_to_1981.csv"))
+  const aj  = readtimearray(Pkg.dir("MarketData/data/daily_spx_from_1980_to_1981.csv"))
+  const Op  = readtimearray(Pkg.dir("MarketData/data/daily_spx_from_1950_to_2013.csv"))
+  const Hi  = readtimearray(Pkg.dir("MarketData/data/daily_spx_from_1950_to_2013.csv"))
+  const Lo  = readtimearray(Pkg.dir("MarketData/data/daily_spx_from_1950_to_2013.csv"))
+  const Cl  = readtimearray(Pkg.dir("MarketData/data/daily_spx_from_1950_to_2013.csv"))
+  const Vm  = readtimearray(Pkg.dir("MarketData/data/daily_spx_from_1950_to_2013.csv"))
+  const Aj  = readtimearray(Pkg.dir("MarketData/data/daily_spx_from_1950_to_2013.csv"))
+  const opm = readtimearray(Pkg.dir("MarketData/data/monthly_spx_from_1980_to_1989.csv"))
+  const him = readtimearray(Pkg.dir("MarketData/data/monthly_spx_from_1980_to_1989.csv"))
+  const lom = readtimearray(Pkg.dir("MarketData/data/monthly_spx_from_1980_to_1989.csv"))
+  const clm = readtimearray(Pkg.dir("MarketData/data/monthly_spx_from_1980_to_1989.csv"))
+  const vmm = readtimearray(Pkg.dir("MarketData/data/monthly_spx_from_1980_to_1989.csv"))
+  const ajm = readtimearray(Pkg.dir("MarketData/data/monthly_spx_from_1980_to_1989.csv"))
   
   # const to test dates
   const firstday    = date(1980,1,3)
@@ -34,7 +40,5 @@ export op, hi, lo, cl, vm, aj,
   const lastmonth   = date(1989,12,1)
 
   # const to test structure
-  const SeriesPairDateFloat64 = eval(:(SeriesPair{Date{ISOCalendar}, Float64}))
-  const ArraySeriesPairDateFloat64 = eval(:(Array{SeriesPair{Date{ISOCalendar}, Float64}, 1}))
 
 end
