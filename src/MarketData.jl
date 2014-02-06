@@ -1,8 +1,8 @@
-using Datetime, TimeArrays
+using Datetime, TimeSeries
 
 module MarketData
 
-using Datetime, TimeArrays
+using Datetime, TimeSeries
 
 export ohlc, op, hi, lo, cl, vm, aj,  
        OHLC, Op, Hi, Lo, Cl, Vm, Aj,  
