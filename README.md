@@ -1,4 +1,4 @@
-MarketData includes historical financial time series datasets. The package provides the data in a TimeArray, which is the TimeSeries data structure.
+MarketData includes historical financial time series datasets from the Quandl Open Data source. The package provides the data in a TimeArray, which is the TimeSeries data structure.
 
 ````julia
 julia> Pkg.add("MarketData")
