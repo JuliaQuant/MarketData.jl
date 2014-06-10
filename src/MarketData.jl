@@ -1,8 +1,7 @@
-using Datetime, TimeSeries
-
 module MarketData
 
-using Datetime, TimeSeries
+using Datetime
+@reexport TimeSeries
 
 export AAPL, 
        BA, 
