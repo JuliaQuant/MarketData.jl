@@ -1,7 +1,7 @@
 module MarketData
 
-using Datetime
-@reexport TimeSeries
+using Datetime, Reexport, HDF5
+@reexport using TimeSeries
 
 export AAPL, 
        BA, 
@@ -18,6 +18,5 @@ export AAPL,
   const op    = AAPL["Open"][date(2000,1,1):date(2001,12,31)]
   const ohlc  = AAPL["Open", "High", "Low", "Close"][date(2000,1,1):date(2001,12,31)] 
   const ohlcv = AAPL["Open", "High", "Low", "Close", "Volume"][date(2000,1,1):date(2001,12,31)] 
-
 
 end
