@@ -14,9 +14,9 @@ export AAPL,
   const CAT  = readtimearray(Pkg.dir("MarketData/data/CAT.csv"))
 
   # smaller datasets used for testing time-related packages
-  const cl    = AAPL["Close"][date(2000,1,1):date(2001,12,31)]
-  const op    = AAPL["Open"][date(2000,1,1):date(2001,12,31)]
-  const ohlc  = AAPL["Open", "High", "Low", "Close"][date(2000,1,1):date(2001,12,31)] 
-  const ohlcv = AAPL["Open", "High", "Low", "Close", "Volume"][date(2000,1,1):date(2001,12,31)] 
+  const cl    = AAPL["Close"][Date(2000,1,1):Date(2001,12,31)]
+  const op    = AAPL["Open"][Date(2000,1,1):Date(2001,12,31)]
+  const ohlc  = AAPL["Open", "High", "Low", "Close"][Date(2000,1,1):Date(2001,12,31)] 
+  const ohlcv = AAPL["Open", "High", "Low", "Close", "Volume"][Date(2000,1,1):Date(2001,12,31)] 
 
 end
