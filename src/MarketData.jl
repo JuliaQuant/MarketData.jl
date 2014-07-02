@@ -1,6 +1,6 @@
 module MarketData
 
-using TimeSeries, HDF5, JDL, Reexport
+using TimeSeries, Reexport
 @reexport using TimeSeries
 
 export AAPL, 
