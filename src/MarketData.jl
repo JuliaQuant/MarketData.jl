@@ -6,7 +6,7 @@ using Dates, TimeSeries, Reexport
 export AAPL, 
        BA, 
        CAT, 
-       cl, op, ohlc, ohlcv # datasets for testing
+       sdata, cl, op, ohlc, ohlcv # datasets for testing
 
   # US Equities from A to C (so far) 
   const AAPL = readtimearray(Pkg.dir("MarketData/data/AAPL.csv"))
@@ -14,6 +14,7 @@ export AAPL,
   const CAT  = readtimearray(Pkg.dir("MarketData/data/CAT.csv"))
 
   # smaller datasets used for testing time-related packages
+  const sdata = readtimearray(Pkg.dir("MarketData/data/sdata.csv"))["Close"]
   const cl    = AAPL["Close"][Date(2000,1,1):Date(2001,12,31)]
   const op    = AAPL["Open"][Date(2000,1,1):Date(2001,12,31)]
   const ohlc  = AAPL["Open", "High", "Low", "Close"][Date(2000,1,1):Date(2001,12,31)] 
