@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/JuliaStats/MarketData.jl.png)](https://travis-ci.org/JuliaStats/MarketData.jl)
-[![Package Evaluator](http://iainnz.github.io/packages.julialang.org/badges/MarketData_0.3.svg)](http://iainnz.github.io/packages.julialang.org/?pkg=MarketData&ver=0.3)
+[![MarketData](http://pkg.julialang.org/badges/MarketData_release.svg)](http://pkg.julialang.org/?pkg=MarketData&ver=release)
 
 MarketData includes historical financial time series datasets from the Quandl Open Data source. The package provides the data in a TimeArray, which is the TimeSeries data structure.
 
