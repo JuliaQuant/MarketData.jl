@@ -1,5 +1,3 @@
-using MarketData
-
 facts("TimeSeries readwrite parses csv file correctly") do
 
     context("1d values array works") do
@@ -32,4 +30,3 @@ facts("const objects have expected length") do
         @fact length(CAT)  => 13090
     end
 end
-
