@@ -32,4 +32,3 @@ facts("const objects have expected length") do
         @fact length(CAT)  => 13090
     end
 end
-
