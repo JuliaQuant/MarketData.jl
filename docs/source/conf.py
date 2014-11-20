@@ -20,7 +20,7 @@ import os
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
 
-import juliadoc
+#import juliadoc
 
 # extensions = ['juliadoc.julia', 'juliadoc.jlhelp']
 # html_theme_path = [juliadoc.get_theme_dir()]
@@ -52,7 +52,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'marketdatajl'
+project = u'Market Data'
 copyright = u'2014, Dan Wlasiuk'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -111,8 +111,9 @@ highlight_language = 'julia'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 
-html_theme = 'julia'
+#html_theme = 'julia'
 #html_theme = 'haiku'
+html_theme = 'default'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -121,8 +122,9 @@ html_theme = 'julia'
 
 # Add any paths that contain custom themes here, relative to this directory.
 
-html_theme_path = [juliadoc.get_theme_dir(),
-                   sphinx_rtd_theme.get_html_theme_path()]
+html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+#html_theme_path = [juliadoc.get_theme_dir(),
+#                   sphinx_rtd_theme.get_html_theme_path()]
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -159,7 +161,7 @@ html_static_path = []
 #html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
-html_sidebars = juliadoc.default_sidebars()
+#html_sidebars = juliadoc.default_sidebars()
 
 
 # Additional templates that should be rendered to pages, maps page names to
@@ -193,7 +195,7 @@ html_show_sphinx = False
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'marketdatajldoc'
+htmlhelp_basename = 'MarketDatadoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -213,7 +215,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'marketdatajl.tex', u'marketdatajl Documentation',
+  ('index', 'MarketData.tex', u'MarketData Documentation',
    u'Dan Wlasiuk', 'manual'),
 ]
 
@@ -243,7 +245,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'marketdatajl', u'marketdatajl Documentation',
+    ('index', 'MarketData', u'MarketData Documentation',
      [u'Dan Wlasiuk'], 1)
 ]
 
@@ -257,8 +259,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'marketdatajl', u'marketdatajl Documentation',
-   u'Dan Wlasiuk', 'marketdatajl', 'One line description of project.',
+  ('index', 'MarketData', u'MarketData Documentation',
+   u'Dan Wlasiuk', 'MarketData', 'One line description of project.',
    'Miscellaneous'),
 ]
 
