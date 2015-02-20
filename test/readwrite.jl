@@ -14,12 +14,17 @@ facts("TimeSeries readwrite parses csv file correctly") do
         @fact typeof(cl.timestamp)    => Vector{Date}
         @fact typeof(sdata.timestamp) => Vector{DateTime}
     end
+
+    context("meta field is correctly constructed") do
+        @fact mdata.meta => "Apple"
+    end
 end
 
 facts("const objects have expected length") do
 
     context("test objects") do
         @fact length(sdata) => 21
+        @fact length(mdata) => 500
         @fact length(op)    => 500
         @fact length(cl)    => 500
         @fact length(ohlc)  => 500
