@@ -1,0 +1,20 @@
+Test data
+=========
+
+Test data ``const`` objects are smaller datasets designed to be used in tests for other packages. They include
+500 rows of data and include both ``Date`` objects and ``DateTime`` objects. All but one of the objects has an 
+empty TimeArray ``meta`` field.
+
++-----------+-----------------------------------------+ 
+| ``const`` | Description                             | 
++===============+=====================================+ 
+| op        | single column Date data                 | 
++-----------+-----------------------------------------+ 
+| cl        | single column Date data                 | 
++-----------+-----------------------------------------+ 
+| ohlc      | four-column Date data                   | 
++-----------+-----------------------------------------+ 
+| sdata     | single column DateTime data             | 
++-----------+-----------------------------------------+ 
+| mdata     | single column Date data with meta field | 
++-----------+-----------------------------------------+ 
