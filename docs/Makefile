@@ -2,78 +2,15 @@
 #
 
 # You can set these variables from the command line.
-
-SPHINXOPTS   = 
-SPHINXBUILD  = sphinx-build
-PAPER        = 
-BUILDDIR     = _build 
-
-### JULIADOCS VERSION # You can set these variables from the command line.
-### JULIADOCS VERSION SPHINXOPTS    =
-### JULIADOCS VERSION ## SPHINXBUILD   = sphinx-build
-### JULIADOCS VERSION PAPER         =
-### JULIADOCS VERSION ## BUILDDIR      = build
-### JULIADOCS VERSION JULIAHOME     = $(abspath ..)
-### JULIADOCS VERSION 
-### JULIADOCS VERSION # Internal variables.
-### JULIADOCS VERSION PAPEROPT_a4     = -D latex_paper_size=a4
-### JULIADOCS VERSION PAPEROPT_letter = -D latex_paper_size=letter
-### JULIADOCS VERSION ALLSPHINXOPTS   = -d _build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
-### JULIADOCS VERSION # the i18n builder cannot share the environment and doctrees with the others
-### JULIADOCS VERSION I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
-### JULIADOCS VERSION 
-### JULIADOCS VERSION JULIA_ENV     = $(JULIAHOME)/deps/julia-env
-### JULIADOCS VERSION ACTIVATE      = $(JULIA_ENV)/bin/activate
-### JULIADOCS VERSION SPHINX_BUILD  = $(JULIA_ENV)/bin/sphinx-build
-### JULIADOCS VERSION 
-### JULIADOCS VERSION $(JULIA_ENV):
-### JULIADOCS VERSION 	$(MAKE) -C $(JULIAHOME)/deps install-virtualenv
-### JULIADOCS VERSION 
-### JULIADOCS VERSION $(ACTIVATE): $(JULIA_ENV)
-### JULIADOCS VERSION 	touch -c $@
-### JULIADOCS VERSION 
-### JULIADOCS VERSION $(SPHINX_BUILD): $(ACTIVATE) requirements.txt
-### JULIADOCS VERSION 	. $(ACTIVATE) && pip install sphinx==1.2.3 \
-### JULIADOCS VERSION 	              && pip install -r requirements.txt
-### JULIADOCS VERSION 	touch -c $@
-### JULIADOCS VERSION 
-### JULIADOCS VERSION SPHINXBUILD = . $(ACTIVATE) && sphinx-build
-### JULIADOCS VERSION # Internal variables.
-### JULIADOCS VERSION PAPEROPT_a4     = -D latex_paper_size=a4
-### JULIADOCS VERSION PAPEROPT_letter = -D latex_paper_size=letter
-### JULIADOCS VERSION ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) source
-### JULIADOCS VERSION # the i18n builder cannot share the environment and doctrees with the others
-### JULIADOCS VERSION I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) source
-
+SPHINXOPTS    =
+SPHINXBUILD   = sphinx-build
+PAPER         =
+BUILDDIR      = _build
 
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $$?), 1)
 $(error The '$(SPHINXBUILD)' command was not found. Make sure you have Sphinx installed, then set the SPHINXBUILD environment variable to point to the full path of the '$(SPHINXBUILD)' executable. Alternatively you can add the directory with the executable to your PATH. If you don't have Sphinx installed, grab it from http://sphinx-doc.org/)
 endif
-
-##### JULIA VERSION # Internal variables.
-##### JULIA VERSION PAPEROPT_a4     = -D latex_paper_size=a4
-##### JULIA VERSION PAPEROPT_letter = -D latex_paper_size=letter
-##### JULIA VERSION ALLSPHINXOPTS   = -d _build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
-##### JULIA VERSION # the i18n builder cannot share the environment and doctrees with the others
-##### JULIA VERSION I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
-##### JULIA VERSION 
-##### JULIA VERSION JULIA_ENV     = $(JULIAHOME)/deps/julia-env
-##### JULIA VERSION ACTIVATE      = $(JULIA_ENV)/bin/activate
-##### JULIA VERSION SPHINX_BUILD  = $(JULIA_ENV)/bin/sphinx-build
-##### JULIA VERSION 
-##### JULIA VERSION $(JULIA_ENV):
-##### JULIA VERSION 	$(MAKE) -C $(JULIAHOME)/deps install-virtualenv
-##### JULIA VERSION 
-##### JULIA VERSION $(ACTIVATE): $(JULIA_ENV)
-##### JULIA VERSION 	touch -c $@
-##### JULIA VERSION 
-##### JULIA VERSION $(SPHINX_BUILD): $(ACTIVATE) requirements.txt
-##### JULIA VERSION 	. $(ACTIVATE) && pip install sphinx==1.2.3 \
-##### JULIA VERSION 	              && pip install -r requirements.txt
-##### JULIA VERSION 	touch -c $@
-##### JULIA VERSION 
-##### JULIA VERSION SPHINXBUILD = . $(ACTIVATE) && sphinx-build
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
@@ -148,17 +85,17 @@ qthelp:
 	@echo
 	@echo "Build finished; now you can run "qcollectiongenerator" with the" \
 	      ".qhcp project file in $(BUILDDIR)/qthelp, like this:"
-	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/MarketData.qhcp"
+	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/marketdatajl.qhcp"
 	@echo "To view the help file:"
-	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/MarketData.qhc"
+	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/marketdatajl.qhc"
 
 devhelp:
 	$(SPHINXBUILD) -b devhelp $(ALLSPHINXOPTS) $(BUILDDIR)/devhelp
 	@echo
 	@echo "Build finished."
 	@echo "To view the help file:"
-	@echo "# mkdir -p $$HOME/.local/share/devhelp/MarketData"
-	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/MarketData"
+	@echo "# mkdir -p $$HOME/.local/share/devhelp/marketdatajl"
+	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/marketdatajl"
 	@echo "# devhelp"
 
 epub:
