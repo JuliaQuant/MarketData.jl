@@ -1,4 +1,4 @@
-MarketData.jl Overview
+MarketData Overview
 ========================================
 
 The MarketData package provides open-source financial data for research and testing.
