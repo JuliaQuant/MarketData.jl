@@ -3,8 +3,11 @@ MarketData Overview
 
 The MarketData package provides open-source financial data for research and testing.
 
-The data is `Quandl Free End of Day Stock Data <http://www.quandl.com/WIKI>`_. 
+The data is from `Quandl <http://www.quandl.com/WIKI>` and is free end-of-day stock data. 
 It is public domain without restrictions.
+
+The TimeSeries TimeArray data structure is used to store the data, but conversion to other
+data structures, including DataFramea and AxisArrays, is supported.
 
 Contents
 --------
@@ -12,7 +15,6 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   introduction
    getting_started
    test_data
    company_financial_series
