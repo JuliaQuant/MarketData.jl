@@ -2,77 +2,85 @@
 #
 
 # You can set these variables from the command line.
-SPHINXOPTS    =
-## SPHINXBUILD   = sphinx-build
-PAPER         =
-## BUILDDIR      = build
-JULIAHOME     = $(abspath ..)
 
-# Internal variables.
-PAPEROPT_a4     = -D latex_paper_size=a4
-PAPEROPT_letter = -D latex_paper_size=letter
-ALLSPHINXOPTS   = -d _build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
-# the i18n builder cannot share the environment and doctrees with the others
-I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
+SPHINXOPTS   = 
+SPHINXBUILD  = sphinx-build
+PAPER        = 
+BUILDDIR     = _build 
 
-JULIA_ENV     = $(JULIAHOME)/deps/julia-env
-ACTIVATE      = $(JULIA_ENV)/bin/activate
-SPHINX_BUILD  = $(JULIA_ENV)/bin/sphinx-build
+### JULIADOCS VERSION # You can set these variables from the command line.
+### JULIADOCS VERSION SPHINXOPTS    =
+### JULIADOCS VERSION ## SPHINXBUILD   = sphinx-build
+### JULIADOCS VERSION PAPER         =
+### JULIADOCS VERSION ## BUILDDIR      = build
+### JULIADOCS VERSION JULIAHOME     = $(abspath ..)
+### JULIADOCS VERSION 
+### JULIADOCS VERSION # Internal variables.
+### JULIADOCS VERSION PAPEROPT_a4     = -D latex_paper_size=a4
+### JULIADOCS VERSION PAPEROPT_letter = -D latex_paper_size=letter
+### JULIADOCS VERSION ALLSPHINXOPTS   = -d _build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
+### JULIADOCS VERSION # the i18n builder cannot share the environment and doctrees with the others
+### JULIADOCS VERSION I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
+### JULIADOCS VERSION 
+### JULIADOCS VERSION JULIA_ENV     = $(JULIAHOME)/deps/julia-env
+### JULIADOCS VERSION ACTIVATE      = $(JULIA_ENV)/bin/activate
+### JULIADOCS VERSION SPHINX_BUILD  = $(JULIA_ENV)/bin/sphinx-build
+### JULIADOCS VERSION 
+### JULIADOCS VERSION $(JULIA_ENV):
+### JULIADOCS VERSION 	$(MAKE) -C $(JULIAHOME)/deps install-virtualenv
+### JULIADOCS VERSION 
+### JULIADOCS VERSION $(ACTIVATE): $(JULIA_ENV)
+### JULIADOCS VERSION 	touch -c $@
+### JULIADOCS VERSION 
+### JULIADOCS VERSION $(SPHINX_BUILD): $(ACTIVATE) requirements.txt
+### JULIADOCS VERSION 	. $(ACTIVATE) && pip install sphinx==1.2.3 \
+### JULIADOCS VERSION 	              && pip install -r requirements.txt
+### JULIADOCS VERSION 	touch -c $@
+### JULIADOCS VERSION 
+### JULIADOCS VERSION SPHINXBUILD = . $(ACTIVATE) && sphinx-build
+### JULIADOCS VERSION # Internal variables.
+### JULIADOCS VERSION PAPEROPT_a4     = -D latex_paper_size=a4
+### JULIADOCS VERSION PAPEROPT_letter = -D latex_paper_size=letter
+### JULIADOCS VERSION ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) source
+### JULIADOCS VERSION # the i18n builder cannot share the environment and doctrees with the others
+### JULIADOCS VERSION I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) source
 
-$(JULIA_ENV):
-	$(MAKE) -C $(JULIAHOME)/deps install-virtualenv
 
-$(ACTIVATE): $(JULIA_ENV)
-	touch -c $@
+# User-friendly check for sphinx-build
+ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $$?), 1)
+$(error The '$(SPHINXBUILD)' command was not found. Make sure you have Sphinx installed, then set the SPHINXBUILD environment variable to point to the full path of the '$(SPHINXBUILD)' executable. Alternatively you can add the directory with the executable to your PATH. If you don't have Sphinx installed, grab it from http://sphinx-doc.org/)
+endif
 
-$(SPHINX_BUILD): $(ACTIVATE) requirements.txt
-	. $(ACTIVATE) && pip install sphinx==1.2.3 \
-	              && pip install -r requirements.txt
-	touch -c $@
+##### JULIA VERSION # Internal variables.
+##### JULIA VERSION PAPEROPT_a4     = -D latex_paper_size=a4
+##### JULIA VERSION PAPEROPT_letter = -D latex_paper_size=letter
+##### JULIA VERSION ALLSPHINXOPTS   = -d _build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
+##### JULIA VERSION # the i18n builder cannot share the environment and doctrees with the others
+##### JULIA VERSION I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
+##### JULIA VERSION 
+##### JULIA VERSION JULIA_ENV     = $(JULIAHOME)/deps/julia-env
+##### JULIA VERSION ACTIVATE      = $(JULIA_ENV)/bin/activate
+##### JULIA VERSION SPHINX_BUILD  = $(JULIA_ENV)/bin/sphinx-build
+##### JULIA VERSION 
+##### JULIA VERSION $(JULIA_ENV):
+##### JULIA VERSION 	$(MAKE) -C $(JULIAHOME)/deps install-virtualenv
+##### JULIA VERSION 
+##### JULIA VERSION $(ACTIVATE): $(JULIA_ENV)
+##### JULIA VERSION 	touch -c $@
+##### JULIA VERSION 
+##### JULIA VERSION $(SPHINX_BUILD): $(ACTIVATE) requirements.txt
+##### JULIA VERSION 	. $(ACTIVATE) && pip install sphinx==1.2.3 \
+##### JULIA VERSION 	              && pip install -r requirements.txt
+##### JULIA VERSION 	touch -c $@
+##### JULIA VERSION 
+##### JULIA VERSION SPHINXBUILD = . $(ACTIVATE) && sphinx-build
 
-SPHINXBUILD = . $(ACTIVATE) && sphinx-build
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
 ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) source
 # the i18n builder cannot share the environment and doctrees with the others
 I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) source
-
-
-#### # User-friendly check for sphinx-build
-#### ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $$?), 1)
-#### $(error The '$(SPHINXBUILD)' command was not found. Make sure you have Sphinx installed, then set the SPHINXBUILD environment variable to point to the full path of the '$(SPHINXBUILD)' executable. Alternatively you can add the directory with the executable to your PATH. If you don't have Sphinx installed, grab it from http://sphinx-doc.org/)
-#### endif
-
-#### # Internal variables.
-#### PAPEROPT_a4     = -D latex_paper_size=a4
-#### PAPEROPT_letter = -D latex_paper_size=letter
-#### ALLSPHINXOPTS   = -d _build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
-#### # the i18n builder cannot share the environment and doctrees with the others
-#### I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
-#### 
-#### JULIA_ENV     = $(JULIAHOME)/deps/julia-env
-#### ACTIVATE      = $(JULIA_ENV)/bin/activate
-#### SPHINX_BUILD  = $(JULIA_ENV)/bin/sphinx-build
-#### 
-#### $(JULIA_ENV):
-#### 	$(MAKE) -C $(JULIAHOME)/deps install-virtualenv
-#### 
-#### $(ACTIVATE): $(JULIA_ENV)
-#### 	touch -c $@
-#### 
-#### $(SPHINX_BUILD): $(ACTIVATE) requirements.txt
-#### 	. $(ACTIVATE) && pip install sphinx==1.2.3 \
-#### 	              && pip install -r requirements.txt
-#### 	touch -c $@
-#### 
-#### SPHINXBUILD = . $(ACTIVATE) && sphinx-build
-#### # Internal variables.
-#### PAPEROPT_a4     = -D latex_paper_size=a4
-#### PAPEROPT_letter = -D latex_paper_size=letter
-#### ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) source
-#### # the i18n builder cannot share the environment and doctrees with the others
-#### I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) source
 
 .PHONY: help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest gettext
 
