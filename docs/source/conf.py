@@ -12,8 +12,7 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys
-import os
+import sys, os, re
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -26,6 +25,7 @@ import os
 # html_theme_path = [juliadoc.get_theme_dir()]
 # html_sidebars = juliadoc.default_sidebars()
 
+import juliadoc
 import sphinx_rtd_theme
 
 # -- General configuration ------------------------------------------------
@@ -36,7 +36,9 @@ import sphinx_rtd_theme
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['juliadoc.julia',
+extensions = ['sphinx.ext.mathjax',
+              'juliadoc.julia',
+              'juliadoc.jldoctest',
               'juliadoc.jlhelp']
 
 # Add any paths that contain templates here, relative to this directory.
@@ -53,7 +55,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Market Data'
-copyright = u'2014, Dan Wlasiuk'
+copyright = u'2014-15, Dan Wlasiuk'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -111,9 +113,10 @@ highlight_language = 'julia'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 
-#html_theme = 'julia'
+html_theme = 'julia'
 #html_theme = 'haiku'
-html_theme = 'default'
+#html_theme = 'default'
+
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -122,9 +125,9 @@ html_theme = 'default'
 
 # Add any paths that contain custom themes here, relative to this directory.
 
-html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
-#html_theme_path = [juliadoc.get_theme_dir(),
-#                   sphinx_rtd_theme.get_html_theme_path()]
+#html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+html_theme_path = [juliadoc.get_theme_dir(),
+                   sphinx_rtd_theme.get_html_theme_path()]
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -283,7 +286,7 @@ texinfo_documents = [
 epub_title = u'MarketData'
 epub_author = u'Dan Wlasiuk'
 epub_publisher = u'Dan Wlasiuk'
-epub_copyright = u'2014, Dan Wlasiuk'
+epub_copyright = u'2014-15, Dan Wlasiuk'
 
 # The basename for the epub file. It defaults to the project name.
 #epub_basename = u'MarketData'
