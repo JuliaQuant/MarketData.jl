@@ -6,7 +6,7 @@ Test data ``const`` objects are smaller datasets designed to be used in tests fo
 empty TimeArray ``meta`` field.
 
 +-----------+-----------------------------------------+----------------+ 
-| Name      | Description                             | Number of rows | 
+| ``const`` | Description                             | Number of rows | 
 +===========+=========================================+================+ 
 | op        | single column Date data                 | 500            |
 +-----------+-----------------------------------------+----------------+ 
@@ -14,7 +14,7 @@ empty TimeArray ``meta`` field.
 +-----------+-----------------------------------------+----------------+ 
 | ohlc      | four-column Date data                   | 500            |
 +-----------+-----------------------------------------+----------------+ 
-| ohlcv     | four-column Date data                   | 500            |
+| ohlcv     | five-column Date data                   | 500            |
 +-----------+-----------------------------------------+----------------+ 
 | sdata     | single column DateTime data             | 21             |
 +-----------+-----------------------------------------+----------------+ 
