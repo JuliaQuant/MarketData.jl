@@ -1,0 +1,3 @@
+library(quantmod)
+AAPL <- as.xts(read.zoo("~/.julia/v0.4/MarketData/data/AAPL.csv", header=T, sep=","))
+save(AAPL, file="~/.julia/v0.4/MarketData/bin/AAPL.RData")

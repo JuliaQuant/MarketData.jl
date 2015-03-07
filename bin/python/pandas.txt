@@ -1,0 +1,14 @@
+$ virtualenv pandas
+$ source pandas/bin/activate
+$ pip install pandas
+$ python # in the home directory
+
+import pandas
+AAPL = pandas.io.parsers.read_csv('.julia/v0.4/MarketData/data/AAPL.csv', sep=',', engine='python') 
+
+import pickle
+filehandler = open('.julia/v0.4/MarketData/bin/AAPL.obj', 'w') 
+pickle.dump(AAPL, filehandler)
+
+filehandler = open('.julia/v0.4/MarketData/bin/AAPL.obj', 'r')
+AAPL = pickle.load(filehandler)
