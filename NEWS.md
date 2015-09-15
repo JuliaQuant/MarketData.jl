@@ -1,6 +1,15 @@
+#### 0.2.8
+
+* last planned version to support Julia 0.3
+* fixes .travis.yml badge to only test Julia version 0.3
+
+#### 0.2.7
+
+* removes vdata from tests (ohlcv contains volume data) 
+
 #### 0.2.6
 
-* last version to support Julia 0.3
+* fixes Julia requirements in REQUIRE
 
 #### 0.2.5
 
