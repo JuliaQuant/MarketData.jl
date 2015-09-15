@@ -25,6 +25,7 @@ facts("const objects have expected length") do
     context("test objects") do
         @fact length(datetime1) => 5
         @fact length(mdata)     => 500
+        @fact length(vdata)     => 500
         @fact length(op)        => 500
         @fact length(cl)        => 500
         @fact length(ohlc)      => 500

@@ -1,16 +1,8 @@
-if VERSION < v"0.4-"
-    using Dates, TimeSeries
-else
-    using Base.Dates, TimeSeries
-end
+using Dates, TimeSeries
 
 module MarketData
 
-if VERSION < v"0.4-"
-    using Dates, TimeSeries
-else
-    using Base.Dates, TimeSeries
-end
+using Dates, TimeSeries
 
 export AAPL,
        BA,
