@@ -1,3 +1,7 @@
+#### 0.2.9
+
+* fixes typo in .travis.yml
+
 #### 0.2.8
 
 * last planned version to support Julia 0.3
