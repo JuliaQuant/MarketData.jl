@@ -8,4 +8,4 @@ notifications:
 sudo: false
 script:
   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-  - julia -e 'Pkg.clone(pwd()); Pkg.build("TimeSeries"); Pkg.test("TimeSeries")'
+  - julia -e 'Pkg.clone(pwd()); Pkg.build("MarketData"); Pkg.test("MarketData")'
