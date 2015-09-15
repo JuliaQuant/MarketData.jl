@@ -4,7 +4,7 @@
 
 #### 0.2.5
 
-* merged Gordon's fixes
+* merged @GordStephen fixes
 
 #### 0.2.4
 
