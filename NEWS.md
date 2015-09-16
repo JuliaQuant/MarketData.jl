@@ -1,3 +1,8 @@
+#### 0.3.0
+
+* first version with support for Julia 0.4 only
+* includes support for pre-compilation
+
 #### 0.2.9
 
 * fixes typo in .travis.yml

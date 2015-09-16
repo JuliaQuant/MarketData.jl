@@ -1,8 +1,8 @@
-using Dates, TimeSeries
+__precompile__()
 
 module MarketData
 
-using Dates, TimeSeries
+using Base.Dates, TimeSeries
 
 export AAPL,
        BA,
