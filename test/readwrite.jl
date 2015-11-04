@@ -1,4 +1,6 @@
 using MarketData
+FactCheck.setstyle(:compact)
+FactCheck.onlystats(true)
 
 facts("TimeSeries readwrite parses csv file correctly") do
 
@@ -16,7 +18,9 @@ facts("TimeSeries readwrite parses csv file correctly") do
     end
 
     context("meta field is correctly constructed") do
-        @fact mdata.meta --> "Apple"
+        @fact AAPL.meta --> "AAPL"
+        @fact BA.meta --> "BA"
+        @fact CAT.meta --> "CAT"
     end
 end
 
@@ -24,7 +28,6 @@ facts("const objects have expected length") do
 
     context("test objects") do
         @fact length(datetime1) --> 5
-        @fact length(mdata)     --> 500
         @fact length(op)        --> 500
         @fact length(cl)        --> 500
         @fact length(ohlc)      --> 500

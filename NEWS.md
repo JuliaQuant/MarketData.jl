@@ -1,3 +1,9 @@
+#### 0.3.2
+
+* TimeArray objects now contain strings describing the dataset source stored in the meta field
+* test output now displays in compact form
+* removed mdata object as tests now covered with datasets
+
 #### 0.3.1
 
 * precompilation code fixed
