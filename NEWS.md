@@ -1,3 +1,11 @@
+#### 0.3.4
+
+* Replaced mdata object and associated tests
+
+#### 0.3.3
+
+* Replaced using Base.Dates, TimeSeries outside of module definition
+
 #### 0.3.2
 
 * TimeArray objects now contain strings describing the dataset source stored in the meta field
