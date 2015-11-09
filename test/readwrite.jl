@@ -18,9 +18,10 @@ facts("TimeSeries readwrite parses csv file correctly") do
     end
 
     context("meta field is correctly constructed") do
-        @fact AAPL.meta --> "AAPL"
-        @fact BA.meta --> "BA"
-        @fact CAT.meta --> "CAT"
+        @fact AAPL.meta  --> "AAPL"
+        @fact BA.meta    --> "BA"
+        @fact CAT.meta   --> "CAT"
+        @fact mdata.meta --> "Apple"
     end
 end
 
@@ -32,6 +33,7 @@ facts("const objects have expected length") do
         @fact length(cl)        --> 500
         @fact length(ohlc)      --> 500
         @fact length(ohlcv)     --> 500
+        @fact length(mdata)     --> 500
     end
 
     context("historical data sets") do
