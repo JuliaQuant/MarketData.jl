@@ -12,5 +12,7 @@ Larger historical prices and volume data is provided for three companies:
 +----------+-------------------------------------------------------+----------------+
 | CAT      | End of day data for Caterpillar Inc from 1962 - 2012  | 13,090         |
 +----------+-------------------------------------------------------+----------------+
-| DELL     | End of day data for DELL Inc.      from  1988 - 2015  | 6,389          |
+| DELL     | End of day data for DELL Inc.      from  1988 - 2015  | 6,353          |
++----------+-------------------------------------------------------+----------------+
+| EBAY     | End of day data for eBay Inc.      from  1998 - 2016  | 3,842          |
 +----------+-------------------------------------------------------+----------------+
