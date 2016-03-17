@@ -8,14 +8,16 @@ export AAPL,
        BA,
        CAT,
        DELL,
+       EBAY,
        cl, op, ohlc, ohlcv,
        datetime1, datetime2, mdata
 
-  # US Equities from A to D (so far)
+  # US Equities from A to E (so far)
   const AAPL = readtimearray(Pkg.dir("MarketData/data/AAPL.csv"), meta = "AAPL")
   const BA   = readtimearray(Pkg.dir("MarketData/data/BA.csv"),   meta = "BA")
   const CAT  = readtimearray(Pkg.dir("MarketData/data/CAT.csv"),  meta = "CAT")
   const DELL = readtimearray(Pkg.dir("MarketData/data/DELL.csv"), meta = "DELL")
+  const EBAY = readtimearray(Pkg.dir("MarketData/data/EBAY.csv"), meta = "EBAY")
 
   # smaller datasets used for testing time-related packages
   const cl        = AAPL["Close"][Date(2000,1,1):Date(2001,12,31)]
