@@ -42,7 +42,7 @@ facts("const objects have expected length") do
         @fact length(AAPL) --> 8336
         @fact length(BA)   --> 13090
         @fact length(CAT)  --> 13090
-        @fact length(DELL) --> 6352
-        @fact length(EBAY) --> 3841
+        @fact length(DELL) --> 6353
+        @fact length(EBAY) --> 3842
     end
 end
