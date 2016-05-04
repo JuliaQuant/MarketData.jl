@@ -4,7 +4,6 @@
 
 #### 0.3.5
 
-
 * Added Dell, Inc @Dawny33
 
 #### 0.3.4
