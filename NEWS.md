@@ -1,6 +1,10 @@
+#### 0.3.6
+
+* fixes missing header for Dell and EBay @GordStephen
 #### 0.3.5
 
-* Added Dell, Inc (@Dawny33)
+
+* Added Dell, Inc @Dawny33
 
 #### 0.3.4
 
