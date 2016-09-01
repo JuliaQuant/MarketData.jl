@@ -1,3 +1,7 @@
+#### 0.3.7
+
+* add F, GE (fixes issue #22)
+
 #### 0.3.6
 
 * fixes missing header for Dell and EBay @GordStephen

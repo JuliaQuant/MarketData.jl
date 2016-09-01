@@ -23,6 +23,8 @@ facts("TimeSeries readwrite parses csv file correctly") do
         @fact CAT.meta   --> "CAT"
         @fact DELL.meta  --> "DELL"
         @fact EBAY.meta  --> "EBAY"
+        @fact F.meta     --> "F"
+        @fact GE.meta    --> "GE"
         @fact mdata.meta --> "Apple"
     end
 end
@@ -44,5 +46,7 @@ facts("const objects have expected length") do
         @fact length(CAT)  --> 13090
         @fact length(DELL) --> 6353
         @fact length(EBAY) --> 3842
+        @fact length(F)    --> 10491
+        @fact length(GE)   --> 13090
     end
 end
