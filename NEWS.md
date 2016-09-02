@@ -1,3 +1,7 @@
+#### 0.4.0
+
+* bottom Julia version is 0.4 with no upper bound
+
 #### 0.3.8
 
 * revert to older version of TimeSeries because of bounds restrictions
