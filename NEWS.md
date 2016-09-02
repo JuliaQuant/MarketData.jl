@@ -1,3 +1,7 @@
+#### 0.3.8
+
+* revert to older version of TimeSeries because of bounds restrictions
+
 #### 0.3.7
 
 * add F, GE (fixes issue #22)
