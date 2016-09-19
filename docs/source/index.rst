@@ -1,5 +1,5 @@
 MarketData Overview
-========================================
+===================
 
 The MarketData package provides open-source financial data for research and testing.
 
@@ -18,3 +18,4 @@ Contents
    getting_started
    test_data
    company_financial_series
+   helpers

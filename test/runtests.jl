@@ -1,5 +1,6 @@
 using FactCheck
 
-include("readwrite.jl")
+include("const.jl")
+include("helpers.jl")
 
 exitstatus()

@@ -1,3 +1,7 @@
+#### 0.4.1
+
+* helper methods with documentation and tests partially resolving issue #29
+
 #### 0.4.0
 
 * bottom Julia version is 0.4 with no upper bound
