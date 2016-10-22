@@ -1,3 +1,7 @@
+#### 0.5.0
+
+* limit support to julia 0.5.0 and above
+
 #### 0.4.1
 
 * helper methods with documentation and tests partially resolving issue #29
