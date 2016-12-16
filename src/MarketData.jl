@@ -2,15 +2,17 @@ VERSION >= v"0.4.0-dev+6521" && __precompile__(true)
 
 module MarketData
 
-using TimeSeries
+using TimeSeries, Requests
 
 export AAPL, BA, CAT, DELL, EBAY, F, GE,
        cl, op, ohlc, ohlcv, datetime1, datetime2, mdata,
-       o, h, l, c, v
+       o, h, l, c, v,
+       yahoo, fred
 
 ###### include ##################
 
 include("const.jl")
 include("helpers.jl")
+include("downloads.jl")
 
 end

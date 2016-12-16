@@ -1,3 +1,11 @@
+#### 0.6.0
+
+* added fred() and yahoo() methods
+
+#### 0.5.1
+
+* add single letter methods
+
 #### 0.5.0
 
 * limit support to julia 0.5.0 and above
