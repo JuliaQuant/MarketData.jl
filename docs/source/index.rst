@@ -18,4 +18,5 @@ Contents
    getting_started
    test_data
    company_financial_series
+   yahoo_fred
    helpers
