@@ -1,52 +1,52 @@
 using MarketData
-FactCheck.setstyle(:compact)
-FactCheck.onlystats(true)
+using Base.Test
 
-facts("TimeSeries readwrite parses csv file correctly") do
 
-    context("1d values array works") do
-        @fact typeof(cl.values) --> Array{Float64,1}
+@testset "TimeSeries readwrite parses csv file correctly" begin
+
+    @testset "1d values array works" begin
+        @test typeof(cl.values) == Array{Float64,1}
     end
 
-    context("2d values array works") do
-        @fact typeof(ohlc.values) --> Array{Float64,2}
+    @testset "2d values array works" begin
+        @test typeof(ohlc.values) == Array{Float64,2}
     end
 
-    context("timestamp parses to correct type") do
-        @fact typeof(cl.timestamp)        --> Vector{Date}
-        @fact typeof(datetime1.timestamp) --> Vector{DateTime}
+    @testset "timestamp parses to correct type" begin
+        @test typeof(cl.timestamp)        == Vector{Date}
+        @test typeof(datetime1.timestamp) == Vector{DateTime}
     end
 
-    context("meta field is correctly constructed") do
-        @fact AAPL.meta  --> "AAPL"
-        @fact BA.meta    --> "BA"
-        @fact CAT.meta   --> "CAT"
-        @fact DELL.meta  --> "DELL"
-        @fact EBAY.meta  --> "EBAY"
-        @fact F.meta     --> "F"
-        @fact GE.meta    --> "GE"
-        @fact mdata.meta --> "Apple"
+    @testset "meta field is correctly constructed" begin
+        @test AAPL.meta  == "AAPL"
+        @test BA.meta    == "BA"
+        @test CAT.meta   == "CAT"
+        @test DELL.meta  == "DELL"
+        @test EBAY.meta  == "EBAY"
+        @test F.meta     == "F"
+        @test GE.meta    == "GE"
+        @test mdata.meta == "Apple"
     end
 end
 
-facts("const objects have expected length") do
+@testset "const objects have expected length" begin
 
-    context("test objects") do
-        @fact length(datetime1) --> 5
-        @fact length(op)        --> 500
-        @fact length(cl)        --> 500
-        @fact length(ohlc)      --> 500
-        @fact length(ohlcv)     --> 500
-        @fact length(mdata)     --> 500
+    @testset "test objects" begin
+        @test length(datetime1) == 5
+        @test length(op)        == 500
+        @test length(cl)        == 500
+        @test length(ohlc)      == 500
+        @test length(ohlcv)     == 500
+        @test length(mdata)     == 500
     end
 
-    context("historical data sets") do
-        @fact length(AAPL) --> 8336
-        @fact length(BA)   --> 13090
-        @fact length(CAT)  --> 13090
-        @fact length(DELL) --> 6353
-        @fact length(EBAY) --> 3842
-        @fact length(F)    --> 10491
-        @fact length(GE)   --> 13090
+    @testset "historical data sets" begin
+        @test length(AAPL) == 8336
+        @test length(BA)   == 13090
+        @test length(CAT)  == 13090
+        @test length(DELL) == 6353
+        @test length(EBAY) == 3842
+        @test length(F)    == 10491
+        @test length(GE)   == 13090
     end
 end
