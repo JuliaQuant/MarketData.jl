@@ -1,14 +1,12 @@
 using MarketData
-FactCheck.setstyle(:compact)
-FactCheck.onlystats(true)
+using Base.Test
 
-facts("helper method") do
-
-    context("single-letter methods work") do
-        @fact o(AAPL).colnames --> ["Open"]
-        @fact h(AAPL).colnames --> ["High"]
-        @fact l(AAPL).colnames --> ["Low"]
-        @fact c(AAPL).colnames --> ["Close"]
-        @fact v(AAPL).colnames --> ["Volume"]
+@testset "helper method" begin
+    @testset "single-letter methods work" begin
+        @test o(AAPL).colnames == ["Open"]
+        @test h(AAPL).colnames == ["High"]
+        @test l(AAPL).colnames == ["Low"]
+        @test c(AAPL).colnames == ["Close"]
+        @test v(AAPL).colnames == ["Volume"]
     end
 end

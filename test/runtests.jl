@@ -1,6 +1,4 @@
-using FactCheck
+using Base.Test
 
 include("const.jl")
 include("helpers.jl")
-
-exitstatus()
