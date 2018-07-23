@@ -28,6 +28,7 @@ See Also
 """
 
 function yahoo(data::String="^GSPC")
+    Base.depwarn("Yahoo Finance API changed, this function may not work anymore", :yahoo)
     resp = get("http://ichart.yahoo.com/table.csv?s=$data")
     TimeArray(resp, m=data)
 end
