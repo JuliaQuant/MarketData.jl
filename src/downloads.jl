@@ -1,4 +1,12 @@
 import TimeSeries.TimeArray
+
+
+struct APIResponse
+    data::String
+    http_resp::HTTP.Messages.Response
+end
+
+
 """
 Description
 
@@ -29,8 +37,10 @@ See Also
 
 function yahoo(data::String="^GSPC")
     Base.depwarn("Yahoo Finance API changed, this function may not work anymore", :yahoo)
-    resp = get("http://ichart.yahoo.com/table.csv?s=$data")
-    TimeArray(resp, m=data)
+    url = "http://ichart.yahoo.com/table.csv?s=$data"
+    http_resp = HTTP.request("GET", url)
+    resp = APIResponse(data, http_resp)
+    TimeArray(resp)
 end
 
 """
@@ -62,16 +72,20 @@ See Also
     yahoo() which is a wrapper from downloading financial time series for stocks from Yahoo Finance.
 """
 function fred(data::String="CPIAUCNS")
-    resp = get("http://research.stlouisfed.org/fred2/series/$data/downloaddata/$data.csv")
-    TimeArray(resp, m=data)
+    url = "http://research.stlouisfed.org/fred2/series/$data/downloaddata/$data.csv"
+    http_resp = HTTP.request("GET", url)
+    resp = APIResponse(data, http_resp)
+    TimeArray(resp)
 end
 
-function TimeArray(resp::Requests.Response; m="")
+
+function TimeArray(resp::APIResponse)
     #This function transform the Response object into a TimeArray
     # Split the data on every "\n"
-    data = split(Requests.text(resp), "\n")
+    raw_data = String(resp.http_resp.body)
+    data = split(raw_data, "\n")
     # Extract the head and body of the data
-    head = data[1]  
+    head = strip(data[1])
     body = data[2:end]
     # Parse body    
     body[end] == "" ? pop!(body) : nothing # remove trailing empty string if it's there
@@ -98,6 +112,6 @@ function TimeArray(resp::Requests.Response; m="")
     ######### Column names
     names = split(head, ",")[2:end] # Won't need the Date name (fist column) for TimeArray
     names = String[name for name in names]
-    return TimeArray(timestamp, fvals, names, m)
+    return TimeArray(timestamp, fvals, names, resp.data)
 end
 
