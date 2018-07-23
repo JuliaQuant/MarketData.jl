@@ -15,7 +15,7 @@ left with determining the correct name for the data of interest.
 For the `yahoo()` method, the default
 data is the S&P 500 end-of-day daily prices. That symbol is named `^GSPC`.
 
-!!! note
+!!! warning
 
     Yahoo! Finance has been immediately deprecated. Yahoo! substantially altered their API in late 2017 and this csv endpoint was retired.
 
