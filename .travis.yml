@@ -1,11 +1,20 @@
 language: julia
+
 os:
   - linux
+
 julia:
   - 0.6
+
 notifications:
   email: false
+
 sudo: false
+
 script:
   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
   - julia -e 'Pkg.clone(pwd()); Pkg.build("MarketData"); Pkg.test("MarketData")'
+
+after_success:
+  - julia -e 'Pkg.add("Documenter")'
+  - julia -e 'cd(Pkg.dir("MarketData")); include(joinpath("docs", "make.jl"))'
