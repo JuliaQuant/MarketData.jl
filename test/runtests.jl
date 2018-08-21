@@ -1,4 +1,4 @@
-using Base.Test
+using Test
 
 include("const.jl")
 include("helpers.jl")

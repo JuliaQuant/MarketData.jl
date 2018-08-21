@@ -1,5 +1,5 @@
 using MarketData
-using Base.Test
+using Test
 
 
 @testset "TimeSeries readwrite parses csv file correctly" begin
