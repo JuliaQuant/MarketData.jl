@@ -1,5 +1,5 @@
 using MarketData
-using Base.Test
+using Test
 
 @testset "helper method" begin
     @testset "single-letter methods work" begin
