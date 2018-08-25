@@ -31,10 +31,9 @@ References
     http://www.finance.yahoo.com
 
 See Also
-    
+
     fred() which accesses the St. Louis Federal Reserve financial and economic data sets.
 """
-
 function yahoo(data::String="^GSPC")
     Base.depwarn("Yahoo Finance API changed, this function may not work anymore", :yahoo)
     url = "http://ichart.yahoo.com/table.csv?s=$data"
@@ -60,8 +59,8 @@ Method Signature(s)
 Details
 
     The fred() method takes a string argument that corresponds to a series code from the St. Louis Federal
-    Reserve (FRED) database. It returns the data in the TimeSeries.TimeArray data structure.  When no argument 
-    is provided, the default data set is the Consumer Price Index for All Urban Consumers: All Items (CPIAUCNS). 
+    Reserve (FRED) database. It returns the data in the TimeSeries.TimeArray data structure.  When no argument
+    is provided, the default data set is the Consumer Price Index for All Urban Consumers: All Items (CPIAUCNS).
 
 References
 
@@ -87,7 +86,7 @@ function TimeArray(resp::APIResponse)
     # Extract the head and body of the data
     head = strip(data[1])
     body = data[2:end]
-    # Parse body    
+    # Parse body
     body[end] == "" ? pop!(body) : nothing # remove trailing empty string if it's there
     body      = [split(line, ",") for line in body] # split on comma
     ######### Timestamp
@@ -95,7 +94,7 @@ function TimeArray(resp::APIResponse)
     # TODO: regex query needed to catch edge cases
     dates     = [line[1] for line in body]
     timestamp = Date[Date(d) for d in dates] # parse dates
-    ######### Values 
+    ######### Values
     svals = [line[2:end] for line in body] # get rows 2 to the end
     fvals = zeros(length(svals),length(svals[1]))
     for r in 1:size(fvals,1)

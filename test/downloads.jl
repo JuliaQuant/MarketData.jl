@@ -1,5 +1,5 @@
 using MarketData
-using Base.Test
+using Test
 
 @testset "remote" begin
     @testset "FRED" begin
