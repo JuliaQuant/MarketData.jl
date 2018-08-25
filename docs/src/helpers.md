@@ -5,7 +5,10 @@ financial time series columns. The five column names that are supported
 include `o()` for Open, `h()` for High, `l()` for Low, `c()` for Close
 and `v()` for Volume.:
 
-```@repl
+```@setup helper
 using MarketData
+```
+
+```@repl helper
 o(AAPL)
 ```
