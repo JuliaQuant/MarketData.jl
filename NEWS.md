@@ -1,3 +1,22 @@
+#### 0.9.0
+
+* Deprecate the following helper functions,
+  since we are moving toward the Symbol indexing in TimeSeries.jl.
+    * `o`
+    * `h`
+    * `l`
+    * `c`
+
+  Using `ta[:Close]` or `ta.Close` is recommended.
+
+#### 0.8.0
+
+* Reexport TimeSeries.jl stuffs
+
+#### 0.7.0
+
+* Drop 0.5 support
+
 #### 0.6.0
 
 * added fred() and yahoo() methods
