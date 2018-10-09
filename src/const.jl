@@ -20,4 +20,4 @@
   const datetime1 = readtimearray(joinpath(DATADIR, "datetime1.csv"))
   const datetime2 = readtimearray(joinpath(DATADIR, "datetime2.csv"),
                                   format="yyyy-mm-dd HH:MM:SS")
-  const mdata     = TimeArray(cl.timestamp, cl.values, cl.colnames, "Apple") # data with meta field occupied
+  const mdata     = TimeArray(timestamp(cl), values(cl), colnames(cl), "Apple") # data with meta field occupied
