@@ -1,4 +1,4 @@
-#### 0.9.0
+#### 0.10.0
 
 * Deprecate the following helper functions,
   since we are moving toward the Symbol indexing in TimeSeries.jl.
@@ -8,6 +8,10 @@
     * `c`
 
   Using `ta[:Close]` or `ta.Close` is recommended.
+
+### 0.9.0
+
+* Julia 0.7/1.0 supports.
 
 #### 0.8.0
 
