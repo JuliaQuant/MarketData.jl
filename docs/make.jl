@@ -11,7 +11,6 @@ makedocs(
         "test_data.md",
         "company_financial_series.md",
         "downloads.md",
-        "helpers.md",
     ]
 )
 
