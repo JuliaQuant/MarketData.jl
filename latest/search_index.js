@@ -21,7 +21,7 @@ var documenterSearchIndex = {"docs": [
     "page": "MarketData Overview",
     "title": "Contents",
     "category": "section",
-    "text": "Pages = [\n    \"getting_started.md\",\n    \"test_data.md\",\n    \"company_financial_series.md\",\n    \"downloads.md\",\n    \"helpers.md\",\n]"
+    "text": "Pages = [\n    \"getting_started.md\",\n    \"test_data.md\",\n    \"company_financial_series.md\",\n    \"downloads.md\",\n]"
 },
 
 {
@@ -102,22 +102,6 @@ var documenterSearchIndex = {"docs": [
     "title": "FRED",
     "category": "section",
     "text": "The default data for the fred() method is CPIAUCNS, which represents the Consumer Price Index for All Urban Consumers data."
-},
-
-{
-    "location": "helpers.html#",
-    "page": "Helper methods",
-    "title": "Helper methods",
-    "category": "page",
-    "text": ""
-},
-
-{
-    "location": "helpers.html#Helper-methods-1",
-    "page": "Helper methods",
-    "title": "Helper methods",
-    "category": "section",
-    "text": "Single-letter methods are provided to make it easier to extract specific financial time series columns. The five column names that are supported include o() for Open, h() for High, l() for Low, c() for Close and v() for Volume.:using MarketData\no(AAPL)"
 },
 
 ]}
