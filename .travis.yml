@@ -12,6 +12,10 @@ notifications:
 
 sudo: false
 
+after_success:
+    - julia -e 'using Pkg; Pkg.add("Coverage");
+                using Coverage; Codecov.submit(process_folder())'
+
 # https://juliadocs.github.io/Documenter.jl/latest/man/hosting/#.travis.yml-Configuration-1
 jobs:
   include:
