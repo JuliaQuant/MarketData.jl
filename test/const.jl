@@ -5,27 +5,27 @@ using Test
 @testset "TimeSeries readwrite parses csv file correctly" begin
 
     @testset "1d values array works" begin
-        @test typeof(cl.values) == Array{Float64,1}
+        @test cl |> values isa Array{Float64,1}
     end
 
     @testset "2d values array works" begin
-        @test typeof(ohlc.values) == Array{Float64,2}
+        @test ohlc |> values isa Array{Float64,2}
     end
 
     @testset "timestamp parses to correct type" begin
-        @test typeof(cl.timestamp)        == Vector{Date}
-        @test typeof(datetime1.timestamp) == Vector{DateTime}
+        @test cl |> timestamp        isa Vector{Date}
+        @test datetime1 |> timestamp isa Vector{DateTime}
     end
 
     @testset "meta field is correctly constructed" begin
-        @test AAPL.meta  == "AAPL"
-        @test BA.meta    == "BA"
-        @test CAT.meta   == "CAT"
-        @test DELL.meta  == "DELL"
-        @test EBAY.meta  == "EBAY"
-        @test F.meta     == "F"
-        @test GE.meta    == "GE"
-        @test mdata.meta == "Apple"
+        @test AAPL |> meta  == "AAPL"
+        @test BA |> meta    == "BA"
+        @test CAT |> meta   == "CAT"
+        @test DELL |> meta  == "DELL"
+        @test EBAY |> meta  == "EBAY"
+        @test F |> meta     == "F"
+        @test GE |> meta    == "GE"
+        @test mdata |> meta == "Apple"
     end
 end
 
