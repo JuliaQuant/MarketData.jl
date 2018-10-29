@@ -4,7 +4,7 @@ using Test
 @testset "remote" begin
     @testset "FRED" begin
         ta = fred()
-        @test length(ta.timestamp) > 100
+        @test ta |> timestamp |> length > 100
     end
 
     @testset "Yahoo" begin
@@ -12,5 +12,5 @@ using Test
         # @test length(ta.timestamp) > 100
         @test_broken 1==2
     end
-    
+
 end
