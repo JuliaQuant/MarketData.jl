@@ -1,7 +1,7 @@
 name = "MarketData"
 uuid = "945b72a4-3b13-509d-9b46-1525bb5c06de"
 authors = ["JuliaQuant <https://github.com/JuliaQuant>"]
-version = "0.11.1"
+version = "0.12.0"
 
 [deps]
 HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
@@ -10,9 +10,9 @@ TimeSeries = "9e3dc215-6440-5c97-bce1-76c03772f85e"
 
 [compat]
 HTTP = "0.8"
-TimeSeries = "0.14, 0.15, 0.16"
+TimeSeries = "0.17"
 Reexport = "0.2"
-julia = "0.7, 1"
+julia = "1"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
