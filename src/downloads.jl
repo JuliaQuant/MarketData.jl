@@ -6,41 +6,101 @@ struct APIResponse
     http_resp::HTTP.Messages.Response
 end
 
+abstract type AbstractQueryOpt <: AbstractDict{Symbol,Any} end
 
-"""
-Description
+Base.length(::T) where {T<:AbstractQueryOpt} = fieldcount(T)
+Base.length(::Type{T}) where {T<:AbstractQueryOpt} = fieldcount(T)
 
-    The yahoo() method is a wrapper for downloading historical stock prices from Yahoo.
-
-Usage
-
-    AAPL = yahoo("AAPL)
-    SPX = yahoo()
-
-Method Signature(s)
-
-    yahoo(data::ASCIIString="^GSPC")
-
-Details
-
-    The yahoo method takes a stock name in the form of a string and returns a TimeSeries.TimeArray data structure
-    corresponding to the Yahoo Finance ticker. With no argument, the default historical time series is the S&P 500.
-
-References
-
-    http://www.finance.yahoo.com
-
-See Also
-
-    fred() which accesses the St. Louis Federal Reserve financial and economic data sets.
-"""
-function yahoo(data::String="^GSPC")
-    Base.depwarn("Yahoo Finance API changed, this function may not work anymore", :yahoo)
-    url = "http://ichart.yahoo.com/table.csv?s=$data"
-    http_resp = HTTP.request("GET", url)
-    resp = APIResponse(data, http_resp)
-    TimeArray(resp)
+function Base.iterate(aqo::T, state = 1) where {T<:AbstractQueryOpt}
+  (state > length(T)) && return nothing
+  (fieldname(T, state) => getfield(aqo, state), state + 1)
 end
+
+"""
+    struct YahooOpt <: AbstractQueryOpt
+      period1  # the start time
+      period2  # the end time
+      interval # "1d", "1wk" or "1mo"
+      events   # currently only `:history` supported
+    end
+
+The Yahoo Finance HTTP API query object.
+
+# Examples
+
+```jl-repl
+julia> t = Dates.now()
+2020-08-09T01:38:04.735
+
+julia> YahooOpt(period1 = t - Year(2), period2 = t)
+YahooOpt{DateTime} with 4 entries:
+  :period1  => 1533778685
+  :period2  => 1596937085
+  :interval => "1d"
+  :events   => :history
+```
+"""
+@Base.kwdef struct YahooOpt <: AbstractQueryOpt
+  period1::DateTime = DateTime(1971, 2, 8)
+  period2::DateTime = Dates.now()
+  interval::String  = "1d"
+  events::Symbol    = :history
+end
+
+function Base.iterate(opt::YahooOpt, state = 1)
+  (state > length(YahooOpt)) && return nothing
+  k = fieldname(YahooOpt, state)
+  v = getfield(opt, state)
+  v′ = (k ∈ (:period1, :period2)) ? round(Int, datetime2unix(v)) : v
+  (k => v′, state + 1)
+end
+
+"""
+    yahoo(symbol::AbstractString, opt::YahooOpt = YahooOpt())::TimeArray
+    yahoo(symbol::Symbol, opt::YahooOpt = YahooOpt())::TimeArray
+
+This is a wrapper for downloading historical stock prices from Yahoo Finance.
+
+The yahoo method takes a stock name in the form of a string and returns a
+`TimeSeries.TimeArray` corresponding to the Yahoo Finance ticker.
+With no argument, the default historical time series is the S&P 500.
+
+# Examples
+
+```julia
+AAPL = yahoo(:AAPL)
+SPX = yahoo("^GSPC")
+NQ = yahoo("^IXIC")
+```
+
+```jl-repl
+julia> start = DateTime(2018, 1, 1)
+2018-01-01T00:00:00
+
+julia> yahoo(:AAPL, YahooOpt(period1 = start))
+655×6 TimeArray{Float64,2,Date,Array{Float64,2}} 2018-01-02 to 2020-08-07
+...
+```
+
+# References
+
+  https://finance.yahoo.com
+
+# See Also
+
+  fred() which accesses the St. Louis Federal Reserve financial and economic data sets.
+"""
+function yahoo(sym::AbstractString = "^GSPC", opt::YahooOpt = YahooOpt())
+    host = rand(["query1", "query2"])
+    url  = "https://$host.finance.yahoo.com/v7/finance/download/$sym"
+    res  = HTTP.get(url, query = opt)
+    @assert res.status == 200
+    csv = CSV.File(res.body, missingstrings = ["null"])
+    sch = TimeSeries.Tables.schema(csv)
+    TimeArray(csv, timestamp = first(sch.names))
+end
+
+yahoo(s::Symbol, opt::YahooOpt = YahooOpt()) = yahoo(string(s), opt)
 
 """
 Description
@@ -75,42 +135,5 @@ function fred(data::String="CPIAUCNS")
     http_resp = HTTP.request("GET", url)
     resp = APIResponse(data, http_resp)
     TimeArray(resp)
-end
-
-
-function TimeArray(resp::APIResponse)
-    #This function transform the Response object into a TimeArray
-    # Split the data on every "\n"
-    raw_data = String(resp.http_resp.body)
-    data = split(raw_data, "\n")
-    # Extract the head and body of the data
-    head = strip(data[1])
-    body = data[2:end]
-    # Parse body
-    body[end] == "" ? pop!(body) : nothing # remove trailing empty string if it's there
-    body      = [split(line, ",") for line in body] # split on comma
-    ######### Timestamp
-    # take the first row (assuming it's date)
-    # TODO: regex query needed to catch edge cases
-    dates     = [line[1] for line in body]
-    timestamp = Date[Date(d) for d in dates] # parse dates
-    ######### Values
-    svals = [line[2:end] for line in body] # get rows 2 to the end
-    fvals = zeros(length(svals),length(svals[1]))
-    for r in 1:size(fvals,1)
-        for c in 1:size(fvals,2)
-            # is not empty and is not equal to FRED's iconic "." sentinel for missingness
-            if ~isempty(svals[r][c]) && ~isequal(svals[r][c],".\r")
-            fvals[r,c] = parse(Float64, svals[r][c])
-            else
-            # captures FRED's "." sentinel
-            fvals[r,c] = NaN
-            end
-        end
-    end
-    ######### Column names
-    names = split(head, ",")[2:end] # Won't need the Date name (fist column) for TimeArray
-    names = String[name for name in names]
-    return TimeArray(timestamp, fvals, names, resp.data)
 end
 
