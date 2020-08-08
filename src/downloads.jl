@@ -40,11 +40,17 @@ YahooOpt{DateTime} with 4 entries:
   :events   => :history
 ```
 """
-@Base.kwdef struct YahooOpt <: AbstractQueryOpt
-  period1::DateTime = DateTime(1971, 2, 8)
-  period2::DateTime = Dates.now()
-  interval::String  = "1d"
-  events::Symbol    = :history
+struct YahooOpt <: AbstractQueryOpt
+  period1::DateTime
+  period2::DateTime
+  interval::String
+  events::Symbol
+
+  YahooOpt(; period1::DateTime = DateTime(1971, 2, 8),
+          period2::DateTime = Dates.now(),
+          interval::String  = "1d",
+          events::Symbol    = :history) =
+    new(period1, period2, interval, events)
 end
 
 function Base.iterate(opt::YahooOpt, state = 1)
