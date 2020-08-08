@@ -11,6 +11,6 @@ using Test
         t = Dates.now() - Year(2)
         opt = YahooOpt(period1 = t)
         ta = yahoo(:AAPL, opt)
-        @test length(ta.timestamp) > 100
+        @test ta |> timestamp |> length > 100
     end
 end
