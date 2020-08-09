@@ -20,6 +20,7 @@ export AbstractQueryOpt,
 
 ###### include ##################
 
+include("utils.jl")
 include("const.jl")
 include("helpers.jl")
 include("downloads.jl")

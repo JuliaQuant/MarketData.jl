@@ -1,11 +1,5 @@
 import TimeSeries.TimeArray
 
-
-struct APIResponse
-    data::String
-    http_resp::HTTP.Messages.Response
-end
-
 abstract type AbstractQueryOpt <: AbstractDict{Symbol,Any} end
 
 Base.length(::T) where {T<:AbstractQueryOpt} = fieldcount(T)
@@ -60,9 +54,6 @@ function Base.iterate(opt::YahooOpt, state = 1)
   v′ = (k ∈ (:period1, :period2)) ? round(Int, datetime2unix(v)) : v
   (k => v′, state + 1)
 end
-
-cleanup_colname!(ta::TimeArray) =
-  rename!(s -> replace(s, r"[. -]" => ""), ta, String)
 
 """
     yahoo(symbol::AbstractString, opt::YahooOpt = YahooOpt())::TimeArray
