@@ -16,9 +16,10 @@ makedocs(
 )
 
 deploydocs(
-  repo      = "github.com/JuliaQuant/MarketData.jl.git",
-  devbranch = "master",
-  target    = "build",
-  deps      = nothing,  # we use the `format = :html`, without `mkdocs`
-  make      = nothing,  # we use the `format = :html`, without `mkdocs`
+  repo         = "github.com/JuliaQuant/MarketData.jl.git",
+  devbranch    = "master",
+  target       = "build",
+  deps         = nothing,  # we use the `format = :html`, without `mkdocs`
+  make         = nothing,  # we use the `format = :html`, without `mkdocs`
+  push_preview = true,
 )
