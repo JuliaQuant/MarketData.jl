@@ -10,7 +10,7 @@ Historical financial time series data for research and testing in Julia.
 ### Testing data
 
 There are some data builtin for testing or demo purpose.
-The full list of testing data is [here](https://juliaquant.github.io/MarketData.jl/stable/test_data.html).
+The full list of testing data is [here](https://juliaquant.github.io/MarketData.jl/stable/test_data/).
 
 ```julia
 julia> using MarketData
@@ -55,4 +55,4 @@ julia> yahoo(:INTC)
 ```
 
 The full API reference is
-[here](https://juliaquant.github.io/MarketData.jl/stable/downloads.html).
+[here](https://juliaquant.github.io/MarketData.jl/stable/downloads/).

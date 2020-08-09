@@ -3,23 +3,23 @@ using MarketData
 
 
 makedocs(
-    format = :html,
-    sitename = "MarketData.jl",
-    pages = [
-        "index.md",
-        "getting_started.md",
-        "test_data.md",
-        "company_financial_series.md",
-        "downloads.md",
-    ],
-    modules = [MarketData],
+  format = Documenter.HTML(),
+  sitename = "MarketData.jl",
+  pages = [
+    "index.md",
+    "getting_started.md",
+    "test_data.md",
+    "company_financial_series.md",
+    "downloads.md",
+  ],
+  modules = [MarketData],
 )
 
 deploydocs(
-    repo = "github.com/JuliaQuant/MarketData.jl.git",
-    julia  = "1.0",
-    latest = "master",
-    target = "build",
-    deps = nothing,  # we use the `format = :html`, without `mkdocs`
-    make = nothing,  # we use the `format = :html`, without `mkdocs`
+  repo         = "github.com/JuliaQuant/MarketData.jl.git",
+  devbranch    = "master",
+  target       = "build",
+  deps         = nothing,  # we use the `format = :html`, without `mkdocs`
+  make         = nothing,  # we use the `format = :html`, without `mkdocs`
+  push_preview = true,
 )
