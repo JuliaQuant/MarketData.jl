@@ -61,6 +61,9 @@ function Base.iterate(opt::YahooOpt, state = 1)
   (k => v′, state + 1)
 end
 
+cleanup_colname!(ta::TimeArray) =
+  rename!(s -> replace(s, r"[. -]" => ""), ta, String)
+
 """
     yahoo(symbol::AbstractString, opt::YahooOpt = YahooOpt())::TimeArray
     yahoo(symbol::Symbol, opt::YahooOpt = YahooOpt())::TimeArray
@@ -103,7 +106,7 @@ function yahoo(sym::AbstractString = "^GSPC", opt::YahooOpt = YahooOpt())
     @assert res.status == 200
     csv = CSV.File(res.body, missingstrings = ["null"])
     sch = TimeSeries.Tables.schema(csv)
-    TimeArray(csv, timestamp = first(sch.names))
+    TimeArray(csv, timestamp = first(sch.names)) |> cleanup_colname!
 end
 
 yahoo(s::Symbol, opt::YahooOpt = YahooOpt()) = yahoo(string(s), opt)
@@ -142,6 +145,6 @@ function fred(data::String="CPIAUCNS")
     @assert res.status == 200
     csv = CSV.File(res.body)
     sch = TimeSeries.Tables.schema(csv)
-    TimeArray(csv, timestamp = first(sch.names))
+    TimeArray(csv, timestamp = first(sch.names)) |> cleanup_colname!
 end
 
