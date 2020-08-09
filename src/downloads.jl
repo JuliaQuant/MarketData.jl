@@ -1,11 +1,5 @@
 import TimeSeries.TimeArray
 
-
-struct APIResponse
-    data::String
-    http_resp::HTTP.Messages.Response
-end
-
 abstract type AbstractQueryOpt <: AbstractDict{Symbol,Any} end
 
 Base.length(::T) where {T<:AbstractQueryOpt} = fieldcount(T)
@@ -103,7 +97,7 @@ function yahoo(sym::AbstractString = "^GSPC", opt::YahooOpt = YahooOpt())
     @assert res.status == 200
     csv = CSV.File(res.body, missingstrings = ["null"])
     sch = TimeSeries.Tables.schema(csv)
-    TimeArray(csv, timestamp = first(sch.names))
+    TimeArray(csv, timestamp = first(sch.names)) |> cleanup_colname!
 end
 
 yahoo(s::Symbol, opt::YahooOpt = YahooOpt()) = yahoo(string(s), opt)
@@ -142,6 +136,6 @@ function fred(data::String="CPIAUCNS")
     @assert res.status == 200
     csv = CSV.File(res.body)
     sch = TimeSeries.Tables.schema(csv)
-    TimeArray(csv, timestamp = first(sch.names))
+    TimeArray(csv, timestamp = first(sch.names)) |> cleanup_colname!
 end
 

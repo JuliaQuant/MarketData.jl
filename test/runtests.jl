@@ -1,4 +1,7 @@
 using Test
 
-include("const.jl")
-include("downloads.jl")
+@testset "MarketData.jl" begin
+  include("utils.jl")
+  include("const.jl")
+  include("downloads.jl")
+end
