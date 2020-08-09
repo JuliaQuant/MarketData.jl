@@ -4,14 +4,18 @@ authors = ["JuliaQuant <https://github.com/JuliaQuant>"]
 version = "0.12.1"
 
 [deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
 TimeSeries = "9e3dc215-6440-5c97-bce1-76c03772f85e"
 
 [compat]
+CSV = "0.7"
 HTTP = "0.8"
-TimeSeries = "0.17, 0.18"
 Reexport = "0.2"
+TimeSeries = "0.17, 0.18"
 julia = "1"
 
 [extras]

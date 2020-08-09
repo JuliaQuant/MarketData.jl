@@ -8,9 +8,9 @@ using Test
     end
 
     @testset "Yahoo" begin
-        # ta = yahoo()
-        # @test length(ta.timestamp) > 100
-        @test_broken 1==2
+        t = Dates.now() - Year(2)
+        opt = YahooOpt(period1 = t)
+        ta = yahoo(:AAPL, opt)
+        @test ta |> timestamp |> length > 100
     end
-
 end
