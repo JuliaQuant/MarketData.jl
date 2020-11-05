@@ -1,7 +1,7 @@
 name = "MarketData"
 uuid = "945b72a4-3b13-509d-9b46-1525bb5c06de"
 authors = ["JuliaQuant <https://github.com/JuliaQuant>"]
-version = "0.13.1"
+version = "0.13.2"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
