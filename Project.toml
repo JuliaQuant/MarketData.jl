@@ -1,7 +1,7 @@
 name = "MarketData"
 uuid = "945b72a4-3b13-509d-9b46-1525bb5c06de"
 authors = ["JuliaQuant <https://github.com/JuliaQuant>"]
-version = "0.13.5"
+version = "0.13.6"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
@@ -15,7 +15,7 @@ TimeSeries = "9e3dc215-6440-5c97-bce1-76c03772f85e"
 CSV = "0.7, 0.8"
 HTTP = "0.8, 0.9"
 Reexport = "0.2, 1.0"
-TimeSeries = "0.17, 0.18, 0.19, 0.20, 0.21"
+TimeSeries = "0.17, 0.18, 0.19, 0.20, 0.21, 0.22"
 julia = "1"
 
 [extras]
