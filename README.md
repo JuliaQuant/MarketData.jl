@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.com/JuliaQuant/MarketData.jl.svg?branch=master)](https://travis-ci.com/JuliaQuant/MarketData.jl)
 [![codecov](https://codecov.io/gh/JuliaQuant/MarketData.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/JuliaQuant/MarketData.jl)
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://JuliaQuant.github.io/MarketData.jl/stable)
-[![](https://img.shields.io/badge/docs-latest-blue.svg)](https://JuliaQuant.github.io/MarketData.jl/latest)
+[![](https://img.shields.io/badge/docs-dev-blue.svg)](https://JuliaQuant.github.io/MarketData.jl/dev)
 
 Historical financial time series data for research and testing in Julia.
 
