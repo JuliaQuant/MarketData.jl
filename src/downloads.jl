@@ -95,7 +95,7 @@ function yahoo(sym::AbstractString = "^GSPC", opt::YahooOpt = YahooOpt())
     url  = "https://$host.finance.yahoo.com/v7/finance/download/$sym"
     res  = HTTP.get(url, query = opt)
     @assert res.status == 200
-    csv = CSV.File(res.body, missingstrings = ["null"])
+    csv = CSV.File(res.body, missingstring = "null")
     sch = TimeSeries.Tables.schema(csv)
     TimeArray(csv, timestamp = first(sch.names)) |> cleanup_colname!
 end
