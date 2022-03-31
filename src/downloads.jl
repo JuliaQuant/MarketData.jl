@@ -134,7 +134,7 @@ function fred(data::String="CPIAUCNS")
     url = "http://research.stlouisfed.org/fred2/series/$data/downloaddata/$data.csv"
     res = HTTP.get(url)
     @assert res.status == 200
-    csv = CSV.File(res.body)
+    csv = CSV.File(res.body, missingstring=".")
     sch = TimeSeries.Tables.schema(csv)
     TimeArray(csv, timestamp = first(sch.names)) |> cleanup_colname!
 end
