@@ -13,4 +13,9 @@ using Test
         ta = yahoo(:AAPL, opt)
         @test ta |> timestamp |> length > 100
     end
+
+    @testset "ONS" begin
+        ta = ons()
+        @test ta |> timestamp |> length > 100
+    end
 end
