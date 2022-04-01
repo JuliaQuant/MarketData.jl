@@ -126,7 +126,7 @@ https://research.stlouisfed.org/fred2
 - yahoo() which is a wrapper to download financial time series for stocks from Yahoo Finance.
 - ons()   which is a wrapper to download financial and economic time series data from the Office for National Statistics (ONS).
 """
-function fred(data::String="CPIAUCNS")
+function fred(data::AbstractString="CPIAUCNS")
     url = "http://research.stlouisfed.org/fred2/series/$data/downloaddata/$data.csv"
     res = HTTP.get(url)
     @assert res.status == 200
@@ -165,11 +165,11 @@ https://www.ons.gov.uk/timeseriestool
 - fred() which accesses the St. Louis Federal Reserve financial and economic data sets.
 - yahoo() which is a wrapper from downloading financial time series for stocks from Yahoo Finance.
 """
-function ons(timeseries::String="L522",dataset::String="MM23")
+function ons(timeseries::AbstractString="L522",dataset::AbstractString="MM23")
     url = "https://api.ons.gov.uk/dataset/$dataset/timeseries/$timeseries/data"
     res = HTTP.get(url)
     @assert res.status == 200
-    json = JSON.parse(String(res.body))
+    json = JSON3.read(String(res.body))
     ta = nothing
     if "months" in keys(json)
         data = json["months"]
