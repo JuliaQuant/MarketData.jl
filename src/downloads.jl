@@ -1,6 +1,3 @@
-import TimeSeries.TimeArray
-import JSON.parse
-
 abstract type AbstractQueryOpt <: AbstractDict{Symbol,Any} end
 
 Base.length(::T) where {T<:AbstractQueryOpt} = fieldcount(T)
