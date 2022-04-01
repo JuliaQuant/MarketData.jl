@@ -1,5 +1,3 @@
-import TimeSeries.TimeArray
-
 abstract type AbstractQueryOpt <: AbstractDict{Symbol,Any} end
 
 Base.length(::T) where {T<:AbstractQueryOpt} = fieldcount(T)
@@ -88,7 +86,8 @@ julia> yahoo(:AAPL, YahooOpt(period1 = start))
 
 # See Also
 
-  fred() which accesses the St. Louis Federal Reserve financial and economic data sets.
+- fred()  which accesses the St. Louis Federal Reserve financial and economic data sets.
+- ons()   which is a wrapper to download financial and economic time series data from the Office for National Statistics (ONS).
 """
 function yahoo(sym::AbstractString = "^GSPC", opt::YahooOpt = YahooOpt())
     host = rand(["query1", "query2"])
@@ -103,39 +102,94 @@ end
 yahoo(s::Symbol, opt::YahooOpt = YahooOpt()) = yahoo(string(s), opt)
 
 """
-Description
+  fred(data::String="CPIAUCNS")::TimeArray
 
-    The fred() method is a wrapper to download financial and economic time series data from the St. Louis Federal Reserve (FRED).
+The fred() method is a wrapper to download financial and economic time series data from the St. Louis Federal Reserve (FRED).
 
-Usage
+The fred() method takes a string argument that corresponds to a series code from the St. Louis Federal
+Reserve (FRED) database. It returns the data in the TimeSeries.TimeArray data structure.  When no argument
+is provided, the default data set is the Consumer Price Index for All Urban Consumers: All Items (CPIAUCNS).
 
-    DGS = fred("DGS10")
-    CPI = fred()
+# Examples
 
-Method Signature(s)
+```julia
+DGS = fred("DGS10")
+CPI = fred()
+```
 
-    fred(data::String="CPIAUCNS")
+# References
 
-Details
+https://research.stlouisfed.org/fred2
 
-    The fred() method takes a string argument that corresponds to a series code from the St. Louis Federal
-    Reserve (FRED) database. It returns the data in the TimeSeries.TimeArray data structure.  When no argument
-    is provided, the default data set is the Consumer Price Index for All Urban Consumers: All Items (CPIAUCNS).
+# See Also
 
-References
-
-    https://research.stlouisfed.org/fred2
-
-See Also
-
-    yahoo() which is a wrapper from downloading financial time series for stocks from Yahoo Finance.
+- yahoo() which is a wrapper to download financial time series for stocks from Yahoo Finance.
+- ons()   which is a wrapper to download financial and economic time series data from the Office for National Statistics (ONS).
 """
-function fred(data::String="CPIAUCNS")
+function fred(data::AbstractString="CPIAUCNS")
     url = "http://research.stlouisfed.org/fred2/series/$data/downloaddata/$data.csv"
     res = HTTP.get(url)
     @assert res.status == 200
-    csv = CSV.File(res.body, missingstring=".")
+    csv = CSV.File(res.body)
     sch = TimeSeries.Tables.schema(csv)
     TimeArray(csv, timestamp = first(sch.names)) |> cleanup_colname!
 end
 
+"""
+    ons(timeseries::String="L522", dataset::String="MM23")::TimeArray
+
+The ons() method is a wrapper to download financial and economic time series data from the Office for National Statistics (ONS).
+
+The ons() method takes two string arguments corresponding to a dataset and timeseries code from 
+the ONS database, to explore the database, you can use https://www.ons.gov.uk/timeseriestool.
+It returns the data in the TimeSeries.TimeArray data structure with additional information in the meta field.
+The data might include monthly values, quarterly averages and yearly averages, with column names
+monthly, quarterly and yearly.
+The timestamps are the first day of the period.  When no argument is provided, the default dataset 
+is the Consumer Price Index including housing costs (CPIH) which is the ONS’s headline measure of inflation.
+
+# Examples
+
+```julia
+UK_RPI = ("CHAW","MM23")
+UK_CPI = ("D7BT","MM23")
+UK_CPIH = ("L522","MM23")
+```
+
+# References
+
+https://www.ons.gov.uk/timeseriestool
+
+# See Also
+
+- fred() which accesses the St. Louis Federal Reserve financial and economic data sets.
+- yahoo() which is a wrapper from downloading financial time series for stocks from Yahoo Finance.
+"""
+function ons(timeseries::AbstractString="L522",dataset::AbstractString="MM23")
+    url = "https://api.ons.gov.uk/dataset/$dataset/timeseries/$timeseries/data"
+    res = HTTP.get(url)
+    @assert res.status == 200
+    json = JSON3.read(String(res.body))
+    ta = nothing
+    if "months" in keys(json)
+        data = json["months"]
+        dates = [Date(x["year"]*" "*x["month"],dateformat"Y U") for x in data]
+        values = [parse(Float64,x["value"]) for x in data]
+        ta = TimeArray((timestamp=dates,monthly=values),timestamp=:timestamp)
+    end
+    if "quarters" in keys(json)
+        data = json["quarters"]
+        dates = [Date(x["year"]*" "*string(parse(Int,x["quarter"][2])*3-2),dateformat"Y m") for x in data]
+        values = [parse(Float64,x["value"]) for x in data]
+        tb = TimeArray((timestamp=dates,quarterly=values),timestamp=:timestamp)
+        ta === nothing ? ta = tb : ta = merge(ta,tb;method=:outer)
+    end
+    if "years" in keys(json)
+        data = json["years"]
+        dates = [Date(x["year"]) for x in data]
+        values = [parse(Float64,x["value"]) for x in data]
+        tb = TimeArray((timestamp=dates,yearly=values),timestamp=:timestamp)
+        ta === nothing ? ta = tb : ta = merge(ta,tb;method=:outer)
+    end
+    TimeArray(ta,meta=json["description"])
+end

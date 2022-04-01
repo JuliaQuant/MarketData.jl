@@ -7,6 +7,7 @@ using HTTP
 using Random
 using Reexport
 using TimeSeries
+using JSON3
 
 @reexport using TimeSeries
 
@@ -16,7 +17,7 @@ export AAPL, BA, CAT, DELL, EBAY, F, GE, TX,
 # downloads.jl
 export AbstractQueryOpt,
        YahooOpt,
-       yahoo, fred
+       yahoo, fred, ons
 
 ###### include ##################
 

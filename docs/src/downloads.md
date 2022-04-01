@@ -1,7 +1,8 @@
 # Downloading from remote data source
 
-Two epynomous methods are provided for downloading free data, from both
-Yahoo Finance (yahoo) and the Federal Reserve St. Louis (fred).
+Three eponymous methods are provided for downloading free data, from
+Yahoo Finance (yahoo) the Federal Reserve St. Louis (fred) and the
+United Kingdom's Office for National Statistics (ons)
 
 These methods take a string argument that represents the name of the
 desired data set to be downloaded.
@@ -24,3 +25,14 @@ YahooOpt
 
 The default data for the `fred()` method is `CPIAUCNS`, which
 represents the Consumer Price Index for All Urban Consumers data.
+
+## ONS
+
+For the `ons()` method, the default
+data is the `L522` timeseries from the `MM23` dataset, which
+represents the Consumer Price Index including housing costs, in the UK.
+This is the ONS' headline monthly price inflation statistic.
+
+```@docs
+ons
+```
