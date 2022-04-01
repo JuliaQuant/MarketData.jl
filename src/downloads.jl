@@ -165,31 +165,31 @@ https://www.ons.gov.uk/timeseriestool
 - fred() which accesses the St. Louis Federal Reserve financial and economic data sets.
 - yahoo() which is a wrapper from downloading financial time series for stocks from Yahoo Finance.
 """
-function ons(timeseries::AbstractString="L522",dataset::AbstractString="MM23")
+function ons(timeseries::AbstractString = "L522", dataset::AbstractString = "MM23")
     url = "https://api.ons.gov.uk/dataset/$dataset/timeseries/$timeseries/data"
     res = HTTP.get(url)
     @assert res.status == 200
-    json = JSON3.read(String(res.body))
+    json = JSON3.read(HTTP.payload(res))
     ta = nothing
     if "months" in keys(json)
         data = json["months"]
-        dates = [Date(x["year"]*" "*x["month"],dateformat"Y U") for x in data]
-        values = [parse(Float64,x["value"]) for x in data]
-        ta = TimeArray((timestamp=dates,monthly=values),timestamp=:timestamp)
+        dates = [Date(x["year"]*" "*x["month"], dateformat"Y U") for x in data]
+        values = [parse(Float64, x["value"]) for x in data]
+        ta = TimeArray((timestamp = dates, monthly = values),timestamp=:timestamp)
     end
     if "quarters" in keys(json)
         data = json["quarters"]
-        dates = [Date(x["year"]*" "*string(parse(Int,x["quarter"][2])*3-2),dateformat"Y m") for x in data]
+        dates = [Date(x["year"]*" "*string(parse(Int, x["quarter"][2])*3-2),dateformat"Y m") for x in data]
         values = [parse(Float64,x["value"]) for x in data]
-        tb = TimeArray((timestamp=dates,quarterly=values),timestamp=:timestamp)
-        ta === nothing ? ta = tb : ta = merge(ta,tb;method=:outer)
+        tb = TimeArray((timestamp = dates, quarterly = values), timestamp = :timestamp)
+        ta === nothing ? ta = tb : ta = merge(ta, tb; method = :outer)
     end
     if "years" in keys(json)
         data = json["years"]
         dates = [Date(x["year"]) for x in data]
-        values = [parse(Float64,x["value"]) for x in data]
-        tb = TimeArray((timestamp=dates,yearly=values),timestamp=:timestamp)
-        ta === nothing ? ta = tb : ta = merge(ta,tb;method=:outer)
+        values = [parse(Float64, x["value"]) for x in data]
+        tb = TimeArray((timestamp = dates, yearly = values), timestamp = :timestamp)
+        ta === nothing ? ta = tb : ta = merge(ta, tb; method = :outer)
     end
-    TimeArray(ta,meta=json["description"])
+    TimeArray(ta, meta = json["description"])
 end
