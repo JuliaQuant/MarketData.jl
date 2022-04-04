@@ -7,6 +7,7 @@ using Test
         @test ta |> timestamp |> length > 100
         ta = fred("DGS10")
         @test ta |> timestamp |> length > 100
+        @test !(ta isa TimeArray{T} where T<:AbstractString)
     end
 
     @testset "Yahoo" begin
