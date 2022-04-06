@@ -36,3 +36,14 @@ This is the ONS' headline monthly price inflation statistic.
 ```@docs
 ons
 ```
+
+## BOE
+
+For the `boe()` method, the default
+seriescode is the `IUDSOIA`, which
+represents the daily Sterling Overnight Index Average
+which is one of the 10 most popular BoE timeseries.
+
+```@docs
+boe
+```

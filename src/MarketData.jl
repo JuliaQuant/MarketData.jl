@@ -17,7 +17,8 @@ export AAPL, BA, CAT, DELL, EBAY, F, GE, TX,
 # downloads.jl
 export AbstractQueryOpt,
        YahooOpt,
-       yahoo, fred, ons
+       BoeOpt,
+       yahoo, fred, ons, boe
 
 ###### include ##################
 

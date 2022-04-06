@@ -20,4 +20,12 @@ using Test
         ta = ons()
         @test ta |> timestamp |> length > 100
     end
+
+    @testset "BOE" begin
+        t = Dates.today() - Year(2)
+        opt = BoeOpt(Datefrom = t)
+        ta = boe("XUDLGBD",opt)
+        @test ta |> timestamp |> length > 100
+        @test timestamp(ta)[1] >= t
+    end
 end

@@ -193,3 +193,116 @@ function ons(timeseries::AbstractString = "L522", dataset::AbstractString = "MM2
     end
     TimeArray(ta, meta = json["description"])
 end
+
+"""
+    struct BoeOpt <: AbstractQueryOpt
+      Datefrom    # the start time
+      Dateto      # the end time
+      UsingCodes  # indicate using series codes
+      CSVF        # "TT" (Tabular with titles), "TN" (Tabular no titles), "CT" (Columnar with- titles) or "CN" (Columnar no titles)
+      VPD         # provisional data is required
+    end
+
+The Bank of England Database API query object.
+
+# Examples
+
+```jl-repl
+julia> t = Dates.today()
+2022-04-06
+
+julia> BoeOpt(Datefrom = t - Year(2), Dateto = t)
+BoeOpt with 5 entries:
+  :Datefrom   => "06/Apr/2020"
+  :Dateto     => "06/Apr/2022"
+  :UsingCodes => "Y"
+  :CSVF       => "TN"
+  :VPD        => "Y"
+```
+"""
+struct BoeOpt <: AbstractQueryOpt
+  Datefrom::Date
+  Dateto::Date
+  UsingCodes::Bool
+  CSVF::String
+  VPD::Bool
+
+  BoeOpt(;  Datefrom::Date = Date(1963, 1, 1),
+            Dateto::Date = Dates.today(),
+            UsingCodes::Bool = true,
+            CSVF::String = "TN",
+            VPD::Bool = true
+    ) =
+    new(Datefrom, Dateto, UsingCodes, CSVF, VPD)
+end
+
+function Base.iterate(opt::BoeOpt, state = 1)
+  (state > length(BoeOpt)) && return nothing
+  k = fieldname(BoeOpt, state)
+  v = getfield(opt, state)
+  v′ = v isa Date ? Dates.format(v,dateformat"dd/u/yyyy") : v isa Bool ? v ? "Y" : "N" : v
+  (k => v′, state + 1)
+end
+
+"""
+  boe(seriescode::String="IUDSOIA")::TimeArray
+
+The boe() method is a wrapper to download financial and economic time series data from the Bank of England (BoE) database.
+
+The boe() method takes a string argument that corresponds to a series code from the BoE database.
+It returns the data in the TimeSeries.TimeArray data structure.  When no argument is provided, the
+default data set is the daily Sterling Overnight Index Average (SONIA) rate.
+
+# Examples
+
+```julia
+GBPUSD = boe("XUDLGBD")
+SONIA = boe()
+```
+
+```jl-repl
+julia> start = Date(2018, 1, 1)
+2018-01-01
+
+julia> boe(:IUDSOIA, BoeOpt(Datefrom = start))
+1078×1 TimeArray{Float64, 1, Date, Vector{Float64}} 2018-01-02 to 2022-04-04
+│            │ IUDSOIA │
+├────────────┼─────────┤
+│ 2018-01-02 │ 0.4622  │
+│ 2018-01-03 │ 0.4642  │
+...
+
+julia> boe("XUDLGBD,XUDLERS", BoeOpt(Datefrom = start))
+1079×2 TimeArray{Float64, 2, Date, Matrix{Float64}} 2018-01-02 to 2022-04-05
+│            │ XUDLGBD │ XUDLERS │
+├────────────┼─────────┼─────────┤
+│ 2018-01-02 │ 0.7364  │ 1.1274  │
+│ 2018-01-03 │ 0.74    │ 1.124   │
+...
+```
+
+# References
+
+https://www.bankofengland.co.uk/boeapps/database/
+https://www.bankofengland.co.uk/boeapps/database/Help.asp#CSV
+https://www.bankofengland.co.uk/statistics/details
+
+# See Also
+
+- yahoo() which is a wrapper to download financial time series for stocks from Yahoo Finance.
+- fred()  which accesses the St. Louis Federal Reserve financial and economic data sets.
+- ons()   which is a wrapper to download financial and economic time series data from the Office for National Statistics (ONS).
+"""
+function boe(seriescodes::AbstractString = "XUDLGBD", opt::BoeOpt = BoeOpt())
+    url = "http://www.bankofengland.co.uk/boeapps/iadb/fromshowcolumns.asp"
+    parameters = Dict(
+      "csv.x" => "yes",
+      "SeriesCodes" => seriescodes
+    )
+    res  = HTTP.get(url, query = merge(parameters,Dict(opt)))
+    @assert res.status == 200
+    csv = CSV.File(res.body, dateformat=dateformat"dd u yyyy")
+    sch = TimeSeries.Tables.schema(csv)
+    TimeArray(csv, timestamp = first(sch.names)) |> cleanup_colname!
+end
+boe(s::Symbol, opt::BoeOpt = BoeOpt()) = boe(string(s), opt)
