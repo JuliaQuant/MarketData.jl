@@ -293,7 +293,7 @@ https://www.bankofengland.co.uk/statistics/details
 - fred()  which accesses the St. Louis Federal Reserve financial and economic data sets.
 - ons()   which is a wrapper to download financial and economic time series data from the Office for National Statistics (ONS).
 """
-function boe(seriescodes::AbstractString = "XUDLGBD", opt::BoeOpt = BoeOpt())
+function boe(seriescodes::AbstractString = "IUDSOIA", opt::BoeOpt = BoeOpt())
     url = "http://www.bankofengland.co.uk/boeapps/iadb/fromshowcolumns.asp"
     parameters = Dict(
       "csv.x" => "yes",
