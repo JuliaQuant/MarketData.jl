@@ -301,6 +301,13 @@ function boe(seriescodes::AbstractString = "IUDSOIA", opt::BoeOpt = BoeOpt())
     )
     res  = HTTP.get(url, query = merge(parameters,Dict(opt)))
     @assert res.status == 200
+    if Dict(res.headers)["Content-Type"] != "application/csv"
+      if Dict(res.headers)["Content-Type"] == "text/html"
+        mat = match(r"<p class=\"error\">\s+([\w\s]+)",String(res.body))
+        !isnothing(mat) && throw("Error message from BoE: $(mat.captures[1])")
+      end
+      throw("CSV not returned from BoE, it's likely that the SeriesCodes, ($seriescodes) are invalid")
+    end
     csv = CSV.File(res.body, dateformat=dateformat"dd u yyyy")
     sch = TimeSeries.Tables.schema(csv)
     TimeArray(csv, timestamp = first(sch.names)) |> cleanup_colname!
