@@ -196,11 +196,11 @@ end
 
 """
     struct BoeOpt <: AbstractQueryOpt
-      Datefrom    # the start time
-      Dateto      # the end time
-      UsingCodes  # indicate using series codes
-      CSVF        # "TT" (Tabular with titles), "TN" (Tabular no titles), "CT" (Columnar with- titles) or "CN" (Columnar no titles)
-      VPD         # provisional data is required
+      datefrom    # the start time
+      dateto      # the end time
+      usingcodes  # indicate using series codes
+      csvf        # "TT" (Tabular with titles), "TN" (Tabular no titles), "CT" (Columnar with- titles) or "CN" (Columnar no titles)
+      vpd         # provisional data is required
     end
 
 The Bank of England Database API query object.
@@ -211,29 +211,29 @@ The Bank of England Database API query object.
 julia> t = Dates.today()
 2022-04-06
 
-julia> BoeOpt(Datefrom = t - Year(2), Dateto = t)
+julia> BoeOpt(datefrom = t - Year(2), dateto = t)
 BoeOpt with 5 entries:
-  :Datefrom   => "06/Apr/2020"
-  :Dateto     => "06/Apr/2022"
-  :UsingCodes => "Y"
-  :CSVF       => "TN"
-  :VPD        => "Y"
+  :datefrom   => "06/Apr/2020"
+  :dateto     => "06/Apr/2022"
+  :usingvodes => "Y"
+  :csvf       => "TN"
+  :vpd        => "Y"
 ```
 """
 struct BoeOpt <: AbstractQueryOpt
-  Datefrom::Date
-  Dateto::Date
-  UsingCodes::Bool
-  CSVF::String
-  VPD::Bool
+  datefrom::Date
+  dateto::Date
+  usingcodes::Bool
+  csvf::String
+  vpd::Bool
 
-  BoeOpt(;  Datefrom::Date = Date(1963, 1, 1),
-            Dateto::Date = Dates.today(),
-            UsingCodes::Bool = true,
-            CSVF::String = "TN",
-            VPD::Bool = true
+  BoeOpt(;  datefrom::Date = Date(1963, 1, 1),
+            dateto::Date = Dates.today(),
+            usingcodes::Bool = true,
+            csvf::String = "TN",
+            vpd::Bool = true
     ) =
-    new(Datefrom, Dateto, UsingCodes, CSVF, VPD)
+    new(datefrom, dateto, usingcodes, csvf, vpd)
 end
 
 function Base.iterate(opt::BoeOpt, state = 1)
@@ -264,7 +264,7 @@ SONIA = boe()
 julia> start = Date(2018, 1, 1)
 2018-01-01
 
-julia> boe(:IUDSOIA, BoeOpt(Datefrom = start))
+julia> boe(:IUDSOIA, BoeOpt(datefrom = start))
 1078×1 TimeArray{Float64, 1, Date, Vector{Float64}} 2018-01-02 to 2022-04-04
 │            │ IUDSOIA │
 ├────────────┼─────────┤
@@ -272,7 +272,7 @@ julia> boe(:IUDSOIA, BoeOpt(Datefrom = start))
 │ 2018-01-03 │ 0.4642  │
 ...
 
-julia> boe("XUDLGBD,XUDLERS", BoeOpt(Datefrom = start))
+julia> boe("XUDLGBD,XUDLERS", BoeOpt(datefrom = start))
 1079×2 TimeArray{Float64, 2, Date, Matrix{Float64}} 2018-01-02 to 2022-04-05
 │            │ XUDLGBD │ XUDLERS │
 ├────────────┼─────────┼─────────┤
