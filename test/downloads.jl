@@ -27,5 +27,6 @@ using Test
         ta = boe("XUDLGBD",opt)
         @test ta |> timestamp |> length > 100
         @test timestamp(ta)[1] >= t
+        @test_throws String boe("asdfasdf")
     end
 end
