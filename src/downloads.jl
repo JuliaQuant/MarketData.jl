@@ -130,7 +130,7 @@ function fred(data::AbstractString="CPIAUCNS")
     url = "http://research.stlouisfed.org/fred2/series/$data/downloaddata/$data.csv"
     res = HTTP.get(url)
     @assert res.status == 200
-    csv = CSV.File(res.body, missingstring=".")
+    csv = CSV.File(res.body, missingstring = ".")
     sch = TimeSeries.Tables.schema(csv)
     TimeArray(csv, timestamp = first(sch.names)) |> cleanup_colname!
 end
@@ -175,7 +175,7 @@ function ons(timeseries::AbstractString = "L522", dataset::AbstractString = "MM2
         data = json["months"]
         dates = [Date(x["year"]*" "*x["month"], dateformat"Y U") for x in data]
         values = [parse(Float64, x["value"]) for x in data]
-        ta = TimeArray((timestamp = dates, monthly = values),timestamp=:timestamp)
+        ta = TimeArray((timestamp = dates, monthly = values), timestamp = :timestamp)
     end
     if "quarters" in keys(json)
         data = json["quarters"]
