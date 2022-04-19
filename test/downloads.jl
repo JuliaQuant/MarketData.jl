@@ -23,7 +23,7 @@ using Test
 
     @testset "BOE" begin
         t = Dates.today() - Year(2)
-        opt = BoeOpt(Datefrom = t)
+        opt = BoeOpt(datefrom = t)
         ta = boe("XUDLGBD",opt)
         @test ta |> timestamp |> length > 100
         @test timestamp(ta)[1] >= t
