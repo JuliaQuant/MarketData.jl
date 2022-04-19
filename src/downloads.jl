@@ -8,6 +8,17 @@ function Base.iterate(aqo::T, state = 1) where {T<:AbstractQueryOpt}
   (fieldname(T, state) => getfield(aqo, state), state + 1)
 end
 
+struct APIError <: Exception
+  errmsg::String
+  res::HTTP.Messages.Response
+end
+Base.showerror(io::IO, e::APIError) = print(io, "Error message from API: ", e.errmsg, "\nfrom query: $(HTTP.unescapeuri(HTTP.uri(e.res.request)))")
+struct InvalidAPIReturn <: Exception
+  expected::String
+  res::HTTP.Messages.Response
+end
+Base.showerror(io::IO, e::InvalidAPIReturn) = print(io, "Expected type: $(e.expected), API returned: $(Dict(e.res.headers)["Content-Type"])\nfrom query: $(HTTP.unescapeuri(HTTP.uri(e.res.request)))")
+
 """
     struct YahooOpt <: AbstractQueryOpt
       period1  # the start time
@@ -304,9 +315,9 @@ function boe(seriescodes::AbstractString = "IUDSOIA", opt::BoeOpt = BoeOpt())
     if Dict(res.headers)["Content-Type"] != "application/csv"
       if Dict(res.headers)["Content-Type"] == "text/html"
         mat = match(r"<p class=\"error\">\s+([\w\s]+)",String(res.body))
-        !isnothing(mat) && throw("Error message from BoE: $(mat.captures[1])")
+        !isnothing(mat) && throw(APIError(string(mat.captures[1]),res))
       end
-      throw("CSV not returned from BoE, it's likely that the SeriesCodes, ($seriescodes) are invalid")
+      throw(InvalidAPIReturn("application/csv",res))
     end
     csv = CSV.File(res.body, dateformat=dateformat"dd u yyyy")
     sch = TimeSeries.Tables.schema(csv)

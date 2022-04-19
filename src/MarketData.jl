@@ -12,6 +12,7 @@ using JSON3
 @reexport using TimeSeries
 
 export AAPL, BA, CAT, DELL, EBAY, F, GE, TX,
+        APIError, InvalidAPIReturn,
        cl, op, ohlc, ohlcv, datetime1, datetime2, mdata,
        o, h, l, c, v
 # downloads.jl
