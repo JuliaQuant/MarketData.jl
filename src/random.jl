@@ -19,7 +19,7 @@ function random_cl(rng::AbstractRNG = Random.GLOBAL_RNG;
     end
     return TimeArray(
         collect(idx),
-        price_init .+ cumsum(rand(price_var_min:price_var_step:price_var_max, length)),
+        price_init .+ cumsum(rand(rng, price_var_min:price_var_step:price_var_max, length)),
         [:Close],
     )
 end
