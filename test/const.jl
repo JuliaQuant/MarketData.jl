@@ -50,3 +50,32 @@ end
         @test length(GE)   == 13090
     end
 end
+
+
+@testset "random data have expected length" begin
+
+    @testset "test random_cl" begin
+        data = random_cl()
+        @test length(data) == 500
+        @test colnames(data) == [:Close]
+    end
+
+    @testset "test random_vol" begin
+        data = random_vol()
+        @test length(data) == 500
+        @test colnames(data) == [:Volume]
+    end
+
+    @testset "test random_ohlc" begin
+        data = random_ohlc()
+        @test length(data) == 500
+        @test colnames(data) == [:Open, :High, :Low, :Close]
+    end
+
+    @testset "test random_ohlcv" begin
+        data = random_ohlcv()
+        @test length(data) == 500
+        @test colnames(data) == [:Open, :High, :Low, :Close, :Volume]
+    end
+
+end

@@ -1,4 +1,7 @@
-function random_cl(;
+using Random
+
+
+function random_cl(rng::AbstractRNG = Random.GLOBAL_RNG;
     start = Dates.DateTime(2020, 1, 1),
     step = Dates.Minute(1),
     length = 500,
@@ -12,7 +15,7 @@ function random_cl(;
 )
     idx = range(start, length = length, step = step)
     if isnothing(price_init)
-        price_init = rand(price_init_min:price_init_step:price_init_max)
+        price_init = rand(rng, price_init_min:price_init_step:price_init_max)
     end
     return TimeArray(
         collect(idx),
@@ -21,7 +24,7 @@ function random_cl(;
     )
 end
 
-function random_vol(;
+function random_vol(rng::AbstractRNG = Random.GLOBAL_RNG;
     start = Dates.DateTime(2020, 1, 1),
     step = Dates.Minute(1),
     length = 500,
@@ -32,12 +35,12 @@ function random_vol(;
     idx = range(start, length = length, step = step)
     return TimeArray(
         collect(idx),
-        rand(vol_init_min:vol_init_step:vol_init_max, length),
+        rand(rng, vol_init_min:vol_init_step:vol_init_max, length),
         [:Volume],
     )
 end
 
-function random_ohlc(;
+function random_ohlc(rng::AbstractRNG = Random.GLOBAL_RNG;
     start = Dates.DateTime(2020, 1, 1),
     step = Dates.Hour(1),
     sub_step = Dates.Minute(1),
@@ -55,7 +58,7 @@ function random_ohlc(;
 )
     idx = range(start, step = step, length = length)
     nsub = ceil(Int, step / sub_step)
-    price = random_cl(
+    price = random_cl(rng,
         start = start,
         step = sub_step,
         length = length * nsub,
@@ -66,7 +69,6 @@ function random_ohlc(;
         price_var_min = price_var_step,
         price_var_max = price_var_max,
     )
-    price
     ta_o = collapse(price, step, first, first)
     ta_h = collapse(price, step, first, maximum)
     ta_l = collapse(price, step, first, minimum)
@@ -76,7 +78,7 @@ function random_ohlc(;
 end
 
 
-function random_ohlcv(;
+function random_ohlcv(rng::AbstractRNG = Random.GLOBAL_RNG;
     start = Dates.DateTime(2020, 1, 1),
     step = Dates.Hour(1),
     sub_step = Dates.Minute(1),
@@ -92,7 +94,7 @@ function random_ohlcv(;
     vol_init_step = 0.1,
     vol_init_max = 100.0,
 )
-    ta_ohlc = random_ohlc(;
+    ta_ohlc = random_ohlc(rng;
         start = start,
         step = step,
         sub_step = sub_step,
@@ -108,7 +110,7 @@ function random_ohlcv(;
         vol_init_step = vol_init_step,
         vol_init_max = vol_init_max,
     )
-    ta_vol = random_vol(;
+    ta_vol = random_vol(rng;
         start = start,
         step = step,
         length = Base.length(ta_ohlc),
