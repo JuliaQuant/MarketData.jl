@@ -53,7 +53,6 @@ function random_ohlc(rng::AbstractRNG = Random.GLOBAL_RNG;
     price_var_step = 0.01,
     price_var_max = 1.0
 )
-    idx = range(start, step = step, length = length)
     nsub = ceil(Int, step / sub_step)
     price = random_cl(rng,
         start = start,
