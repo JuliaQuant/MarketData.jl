@@ -16,11 +16,11 @@ objects. All but one of the objects has an empty TimeArray `meta` field.
 
 ## Random
 
-| `Function`     | Description                            | First timestamp(*)  |   Number of rows(*)
-|----------------|----------------------------------------|---------------------|-----------------
-| `random_cl`    | random close price                     | 2020-01-01          |   500
-| `random_vol`   | random volume                          | 2020-01-01          |   500
-| `random_ohlc`  | random Open/High/Low/Close price data  | 2020-01-01          |   500
-| `random_ohlcv` | random Open/High/Low/Close/Volume data | 2020-01-01          |   500
+| `Function`     | Description                                      | First timestamp(*)  |   Number of rows(*)
+|----------------|--------------------------------------------------|---------------------|-----------------
+| `random_cl`    | random close price                               | 2020-01-01          |   500
+| `random_vol`   | random volume                                    | 2020-01-01          |   500
+| `random_ohlc`  | random `Open`/`High`/`Low`/`Close` price data    | 2020-01-01          |   500
+| `random_ohlcv` | random `Open`/`High`/`Low`/`Close`/`Volume` data | 2020-01-01          |   500
 
 (*) these values are default values but can be changed passing a keyword argument such as `start=Dates.DateTime(2024, 1, 1)` and `length=1000`.
