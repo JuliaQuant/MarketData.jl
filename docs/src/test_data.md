@@ -18,8 +18,8 @@ objects. All but one of the objects has an empty TimeArray `meta` field.
 
 | `Function`     | Description                                      | First timestamp(*)  |   Number of rows(*)
 |----------------|--------------------------------------------------|---------------------|-----------------
-| `random_cl`    | random close price                               | 2020-01-01          |   500
-| `random_vol`   | random volume                                    | 2020-01-01          |   500
+| `random_cl`    | random `Close` price                             | 2020-01-01          |   500
+| `random_vol`   | random `Volume`                                  | 2020-01-01          |   500
 | `random_ohlc`  | random `Open`/`High`/`Low`/`Close` price data    | 2020-01-01          |   500
 | `random_ohlcv` | random `Open`/`High`/`Low`/`Close`/`Volume` data | 2020-01-01          |   500
 
