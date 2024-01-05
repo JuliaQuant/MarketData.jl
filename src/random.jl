@@ -11,7 +11,7 @@ function random_cl(rng::AbstractRNG = Random.GLOBAL_RNG;
     price_init_max = 1000.00,
     price_var_min = -1.0,
     price_var_step = 0.01,
-    price_var_max = 0.01,
+    price_var_max = 1.0,
 )
     idx = range(start, length = length, step = step)
     if isnothing(price_init)
@@ -51,10 +51,7 @@ function random_ohlc(rng::AbstractRNG = Random.GLOBAL_RNG;
     price_init_max = 1000.00,
     price_var_min = -1.0,
     price_var_step = 0.01,
-    price_var_max = 0.01,
-    vol_init_min = 0.0,
-    vol_init_step = 0.1,
-    vol_init_max = 100.0,
+    price_var_max = 1.0
 )
     idx = range(start, step = step, length = length)
     nsub = ceil(Int, step / sub_step)
@@ -66,7 +63,8 @@ function random_ohlc(rng::AbstractRNG = Random.GLOBAL_RNG;
         price_init_min = price_init_min,
         price_init_step = price_init_step,
         price_init_max = price_init_max,
-        price_var_min = price_var_step,
+        price_var_min = price_var_min,
+        price_var_step = price_var_step,
         price_var_max = price_var_max,
     )
     ta_o = collapse(price, step, first, first)
@@ -89,7 +87,7 @@ function random_ohlcv(rng::AbstractRNG = Random.GLOBAL_RNG;
     price_init_max = 1000.00,
     price_var_min = -1.0,
     price_var_step = 0.01,
-    price_var_max = 0.01,
+    price_var_max = 1.0,
     vol_init_min = 0.0,
     vol_init_step = 0.1,
     vol_init_max = 100.0,
@@ -105,10 +103,7 @@ function random_ohlcv(rng::AbstractRNG = Random.GLOBAL_RNG;
         price_init_max = price_init_max,
         price_var_min = price_var_min,
         price_var_step = price_var_step,
-        price_var_max = price_var_max,
-        vol_init_min = vol_init_min,
-        vol_init_step = vol_init_step,
-        vol_init_max = vol_init_max,
+        price_var_max = price_var_max
     )
     ta_vol = random_vol(rng;
         start = start,
