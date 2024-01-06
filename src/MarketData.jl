@@ -14,6 +14,7 @@ using JSON3
 export AAPL, BA, CAT, DELL, EBAY, F, GE, TX,
        cl, op, ohlc, ohlcv, datetime1, datetime2, mdata,
        o, h, l, c, v
+export random_cl, random_vol, random_ohlc, random_ohlcv
 # downloads.jl
 export AbstractQueryOpt,
        YahooOpt,
@@ -23,6 +24,7 @@ export AbstractQueryOpt,
 
 include("utils.jl")
 include("const.jl")
+include("random.jl")
 include("helpers.jl")
 include("downloads.jl")
 
