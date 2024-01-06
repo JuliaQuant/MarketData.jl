@@ -1,6 +1,3 @@
-using Random
-
-
 function random_cl(rng::AbstractRNG = Random.GLOBAL_RNG;
     start = Dates.DateTime(2020, 1, 1),
     step = Dates.Minute(1),
