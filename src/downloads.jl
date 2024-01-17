@@ -8,6 +8,17 @@ function Base.iterate(aqo::T, state = 1) where {T<:AbstractQueryOpt}
   (fieldname(T, state) => getfield(aqo, state), state + 1)
 end
 
+struct APIError <: Exception
+  errmsg::String
+  res::HTTP.Messages.Response
+end
+Base.showerror(io::IO, e::APIError) = print(io, "Error message from API: ", e.errmsg, "\nfrom query: $(HTTP.unescapeuri(HTTP.uri(e.res.request)))")
+struct InvalidAPIReturn <: Exception
+  expected::String
+  res::HTTP.Messages.Response
+end
+Base.showerror(io::IO, e::InvalidAPIReturn) = print(io, "Expected type: $(e.expected), API returned: $(Dict(e.res.headers)["Content-Type"])\nfrom query: $(HTTP.unescapeuri(HTTP.uri(e.res.request)))")
+
 """
     struct YahooOpt <: AbstractQueryOpt
       period1  # the start time
@@ -193,3 +204,123 @@ function ons(timeseries::AbstractString = "L522", dataset::AbstractString = "MM2
     end
     TimeArray(ta, meta = json["description"])
 end
+
+"""
+    struct BoeOpt <: AbstractQueryOpt
+      datefrom    # the start time
+      dateto      # the end time
+      usingcodes  # indicate using series codes
+      csvf        # "TT" (Tabular with titles), "TN" (Tabular no titles), "CT" (Columnar with- titles) or "CN" (Columnar no titles)
+      vpd         # provisional data is required
+    end
+
+The Bank of England Database API query object.
+
+# Examples
+
+```jl-repl
+julia> t = Dates.today()
+2022-04-06
+
+julia> BoeOpt(datefrom = t - Year(2), dateto = t)
+BoeOpt with 5 entries:
+  :datefrom   => "06/Apr/2020"
+  :dateto     => "06/Apr/2022"
+  :usingvodes => "Y"
+  :csvf       => "TN"
+  :vpd        => "Y"
+```
+"""
+struct BoeOpt <: AbstractQueryOpt
+  datefrom::Date
+  dateto::Date
+  usingcodes::Bool
+  csvf::String
+  vpd::Bool
+
+  BoeOpt(;  datefrom::Date = Date(1963, 1, 1),
+            dateto::Date = Dates.today(),
+            usingcodes::Bool = true,
+            csvf::String = "TN",
+            vpd::Bool = true
+    ) =
+    new(datefrom, dateto, usingcodes, csvf, vpd)
+end
+
+function Base.iterate(opt::BoeOpt, state = 1)
+  (state > length(BoeOpt)) && return nothing
+  k = fieldname(BoeOpt, state)
+  v = getfield(opt, state)
+  v′ = v isa Date ? Dates.format(v,dateformat"dd/u/yyyy") : v isa Bool ? v ? "Y" : "N" : v
+  (k => v′, state + 1)
+end
+
+"""
+  boe(seriescode::String="IUDSOIA")::TimeArray
+
+The boe() method is a wrapper to download financial and economic time series data from the Bank of England (BoE) database.
+
+The boe() method takes a string argument that corresponds to a series code from the BoE database.
+It returns the data in the TimeSeries.TimeArray data structure.  When no argument is provided, the
+default data set is the daily Sterling Overnight Index Average (SONIA) rate.
+
+# Examples
+
+```julia
+GBPUSD = boe("XUDLGBD")
+SONIA = boe()
+```
+
+```jl-repl
+julia> start = Date(2018, 1, 1)
+2018-01-01
+
+julia> boe(:IUDSOIA, BoeOpt(datefrom = start))
+1078×1 TimeArray{Float64, 1, Date, Vector{Float64}} 2018-01-02 to 2022-04-04
+│            │ IUDSOIA │
+├────────────┼─────────┤
+│ 2018-01-02 │ 0.4622  │
+│ 2018-01-03 │ 0.4642  │
+...
+
+julia> boe("XUDLGBD,XUDLERS", BoeOpt(datefrom = start))
+1079×2 TimeArray{Float64, 2, Date, Matrix{Float64}} 2018-01-02 to 2022-04-05
+│            │ XUDLGBD │ XUDLERS │
+├────────────┼─────────┼─────────┤
+│ 2018-01-02 │ 0.7364  │ 1.1274  │
+│ 2018-01-03 │ 0.74    │ 1.124   │
+...
+```
+
+# References
+
+https://www.bankofengland.co.uk/boeapps/database/
+https://www.bankofengland.co.uk/boeapps/database/Help.asp#CSV
+https://www.bankofengland.co.uk/statistics/details
+
+# See Also
+
+- yahoo() which is a wrapper to download financial time series for stocks from Yahoo Finance.
+- fred()  which accesses the St. Louis Federal Reserve financial and economic data sets.
+- ons()   which is a wrapper to download financial and economic time series data from the Office for National Statistics (ONS).
+"""
+function boe(seriescodes::AbstractString = "IUDSOIA", opt::BoeOpt = BoeOpt())
+    url = "http://www.bankofengland.co.uk/boeapps/iadb/fromshowcolumns.asp"
+    parameters = Dict(
+      "csv.x" => "yes",
+      "SeriesCodes" => seriescodes
+    )
+    res  = HTTP.get(url, query = merge(parameters,Dict(opt)))
+    @assert res.status == 200
+    if Dict(res.headers)["Content-Type"] != "application/csv"
+      if Dict(res.headers)["Content-Type"] == "text/html"
+        mat = match(r"<p class=\"error\">\s+([\w\s]+)",String(res.body))
+        !isnothing(mat) && throw(APIError(string(mat.captures[1]),res))
+      end
+      throw(InvalidAPIReturn("application/csv",res))
+    end
+    csv = CSV.File(res.body, dateformat=dateformat"dd u yyyy")
+    sch = TimeSeries.Tables.schema(csv)
+    TimeArray(csv, timestamp = first(sch.names)) |> cleanup_colname!
+end
+boe(s::Symbol, opt::BoeOpt = BoeOpt()) = boe(string(s), opt)

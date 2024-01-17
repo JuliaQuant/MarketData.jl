@@ -1,8 +1,9 @@
 # Downloading from remote data source
 
 Three eponymous methods are provided for downloading free data, from
-Yahoo Finance (yahoo) the Federal Reserve St. Louis (fred) and the
-United Kingdom's Office for National Statistics (ons)
+Yahoo Finance (yahoo) the Federal Reserve St. Louis (fred), the
+United Kingdom's Office for National Statistics (ons) and the
+Bank of England's database (boe).
 
 These methods take a string argument that represents the name of the
 desired data set to be downloaded.
@@ -35,4 +36,14 @@ This is the ONS' headline monthly price inflation statistic.
 
 ```@docs
 ons
+```
+## BOE
+
+For the `boe()` method, the default
+seriescode is the `IUDSOIA`, which
+represents the daily Sterling Overnight Index Average
+which is one of the 10 most popular BoE timeseries.
+
+```@docs
+boe
 ```

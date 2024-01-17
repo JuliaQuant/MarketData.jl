@@ -12,13 +12,15 @@ using JSON3
 @reexport using TimeSeries
 
 export AAPL, BA, CAT, DELL, EBAY, F, GE, TX,
+        APIError, InvalidAPIReturn,
        cl, op, ohlc, ohlcv, datetime1, datetime2, mdata,
        o, h, l, c, v
 export random_cl, random_vol, random_ohlc, random_ohlcv
 # downloads.jl
 export AbstractQueryOpt,
        YahooOpt,
-       yahoo, fred, ons
+       BoeOpt,
+       yahoo, fred, ons, boe
 
 ###### include ##################
 
