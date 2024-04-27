@@ -23,3 +23,4 @@ deploydocs(
   make         = nothing,  # we use the `format = :html`, without `mkdocs`
   push_preview = true,
 )
+
