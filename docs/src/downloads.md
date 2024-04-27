@@ -26,6 +26,10 @@ YahooOpt
 The default data for the `fred()` method is `CPIAUCNS`, which
 represents the Consumer Price Index for All Urban Consumers data.
 
+```@docs
+fred
+```
+
 ## ONS
 
 For the `ons()` method, the default
