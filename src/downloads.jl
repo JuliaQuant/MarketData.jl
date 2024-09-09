@@ -91,12 +91,22 @@ julia> yahoo(:AAPL, YahooOpt(period1 = start))
 """
 function yahoo(sym::AbstractString = "^GSPC", opt::YahooOpt = YahooOpt())
     host = rand(["query1", "query2"])
-    url  = "https://$host.finance.yahoo.com/v7/finance/download/$sym"
+    url  = "https://$host.finance.yahoo.com/v8/finance/chart/$sym"
     res  = HTTP.get(url, query = opt)
     @assert res.status == 200
-    csv = CSV.File(res.body, missingstring = "null")
-    sch = TimeSeries.Tables.schema(csv)
-    TimeArray(csv, timestamp = first(sch.names)) |> cleanup_colname!
+
+    json_arr = JSON3.read(res.body)
+    quotes = json_arr.chart.result[1].indicators.quote[1]
+    input_table = (; timestamp = Dates.Date.(Dates.unix2datetime.(json_arr.chart.result[1].timestamp)),
+                   Open = Vector(quotes.open),
+                   High = Vector(quotes.high),
+                   Low = Vector(quotes.low),
+                   Close = Vector(quotes.close),
+                   AdjClose = Vector(json_arr.chart.result[1].indicators.adjclose[1].adjclose),
+                   Volume = Vector(quotes.volume)
+                  )
+
+    TimeArray(input_table, timestamp = :timestamp)
 end
 
 yahoo(s::Symbol, opt::YahooOpt = YahooOpt()) = yahoo(string(s), opt)
