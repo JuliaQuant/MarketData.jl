@@ -11,4 +11,4 @@ following companies:
 | DELL    | DELL Inc.            | 1988 - 2015 |          6,353 |
 | EBAY    | eBay Inc.            | 1998 - 2016 |          3,842 |
 | F       | Ford Motor Co.       | 1998 - 2016 |         10,491 |
-| GM      | General Electric Co. | 1962 - 2016 |         13,090 |
+| GE      | General Electric Co. | 1962 - 2016 |         13,090 |
