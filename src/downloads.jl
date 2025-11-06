@@ -146,7 +146,7 @@ function fred(data::AbstractString="CPIAUCNS")
 end
 
 """
-    ons(timeseries::String="L522", dataset::String="MM23")::TimeArray
+    ons(timeseries::String="L522")::TimeArray
 
 The ons() method is a wrapper to download financial and economic time series data from the Office for National Statistics (ONS).
 
@@ -161,9 +161,9 @@ is the Consumer Price Index including housing costs (CPIH) which is the ONS’s 
 # Examples
 
 ```julia
-UK_RPI = ("CHAW","MM23")
-UK_CPI = ("D7BT","MM23")
-UK_CPIH = ("L522","MM23")
+UK_RPI = ("CHAW")
+UK_CPI = ("D7BT")
+UK_CPIH = ("L522")
 ```
 
 # References
@@ -175,9 +175,13 @@ https://www.ons.gov.uk/timeseriestool
 - fred() which accesses the St. Louis Federal Reserve financial and economic data sets.
 - yahoo() which is a wrapper from downloading financial time series for stocks from Yahoo Finance.
 """
-function ons(timeseries::AbstractString = "L522", dataset::AbstractString = "MM23")
-    url = "https://api.ons.gov.uk/dataset/$dataset/timeseries/$timeseries/data"
+function ons(timeseries::AbstractString = "L522")
+    url = "https://api.beta.ons.gov.uk/v1/search?content_type=timeseries&cdids=$timeseries"
     res = HTTP.get(url)
+    @assert res.status == 200
+    json = JSON3.read(HTTP.payload(res))
+    uri = json["items"][1]["uri"]
+    res = HTTP.get("https://api.beta.ons.gov.uk/v1/data?uri=$uri")
     @assert res.status == 200
     json = JSON3.read(HTTP.payload(res))
     ta = nothing
@@ -203,3 +207,6 @@ function ons(timeseries::AbstractString = "L522", dataset::AbstractString = "MM2
     end
     TimeArray(ta, meta = json["description"])
 end
+
+# For compatibility with earlier versions
+ons(timeseries::AbstractString, dataset::AbstractString) = ons(timeseries)
