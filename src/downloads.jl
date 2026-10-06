@@ -179,11 +179,11 @@ function ons(timeseries::AbstractString = "L522")
     url = "https://api.beta.ons.gov.uk/v1/search?content_type=timeseries&cdids=$timeseries"
     res = HTTP.get(url)
     @assert res.status == 200
-    json = JSON3.read(HTTP.payload(res))
+    json = JSON3.read(res.body)
     uri = json["items"][1]["uri"]
     res = HTTP.get("https://api.beta.ons.gov.uk/v1/data?uri=$uri")
     @assert res.status == 200
-    json = JSON3.read(HTTP.payload(res))
+    json = JSON3.read(res.body)
     ta = nothing
     if "months" in keys(json)
         data = json["months"]
