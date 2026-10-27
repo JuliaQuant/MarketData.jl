@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.com/JuliaQuant/MarketData.jl.svg?branch=main)](https://travis-ci.com/JuliaQuant/MarketData.jl)
-[![codecov](https://codecov.io/gh/JuliaQuant/MarketData.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/JuliaQuant/MarketData.jl)
+[![CI](https://github.com/JuliaQuant/MarketData.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/JuliaQuant/MarketData.jl/actions/workflows/CI.yml?query=branch%3Amain)
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://JuliaQuant.github.io/MarketData.jl/stable)
 [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://JuliaQuant.github.io/MarketData.jl/dev)
 
