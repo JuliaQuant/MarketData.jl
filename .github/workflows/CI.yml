@@ -24,8 +24,7 @@ jobs:
       fail-fast: false
       matrix:
         version:
-          - '1.6' # lower bound of the julia compat
-          - 'lts'
+          - 'lts' # lower bound of the julia compat
           - '1'
         os:
           - ubuntu-latest
