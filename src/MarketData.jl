@@ -7,7 +7,7 @@ using HTTP
 using Random
 using Reexport
 using TimeSeries
-using JSON3
+using JSON
 
 @reexport using TimeSeries
 

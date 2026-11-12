@@ -95,7 +95,7 @@ function yahoo(sym::AbstractString = "^GSPC", opt::YahooOpt = YahooOpt())
     res  = HTTP.get(url, query = opt)
     @assert res.status == 200
 
-    json_arr = JSON3.read(res.body)
+    json_arr = JSON.parse(res.body)
     quotes = json_arr.chart.result[1].indicators.quote[1]
     input_table = (; timestamp = Dates.Date.(Dates.unix2datetime.(json_arr.chart.result[1].timestamp)),
                    Open = Vector(quotes.open),
@@ -179,11 +179,11 @@ function ons(timeseries::AbstractString = "L522")
     url = "https://api.beta.ons.gov.uk/v1/search?content_type=timeseries&cdids=$timeseries"
     res = HTTP.get(url)
     @assert res.status == 200
-    json = JSON3.read(res.body)
+    json = JSON.parse(res.body)
     uri = json["items"][1]["uri"]
     res = HTTP.get("https://api.beta.ons.gov.uk/v1/data?uri=$uri")
     @assert res.status == 200
-    json = JSON3.read(res.body)
+    json = JSON.parse(res.body)
     ta = nothing
     if "months" in keys(json)
         data = json["months"]
